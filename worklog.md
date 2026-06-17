@@ -72,3 +72,35 @@ Work Log:
 Stage Summary:
 - 3 user-reported issues fixed: header shadow, selection animation (scaleX slide-in), section underlining (4px thick coral bar).
 - Bonus: products list now uses full coral background for active item per Figma design.
+
+---
+Task ID: 14
+Agent: main
+Task: Implement snake-style underline attached to bottom of header that slides between menu items; enlarge partner logos per Figma design.
+
+Work Log:
+- Analyzed Figma main.pdf for "Наши клиенты" section: partners shown in a row with visible borders/containers, larger and readable (e.g. ВОСТОКЦЕМЕНТ, ЕВРАЗ logos recognizable).
+- Rewrote Header.tsx to implement single shared "snake" indicator:
+  * Created one <li ref={snakeRef} className="dv-menu__snake"> as the FIRST child of <ul class="dv-menu__list">, absolutely positioned at bottom: 0 of the menu list.
+  * Stored refs to each menu <a> in a ref map.
+  * On hover/focus of any menu item, positionSnake() computes the link's bounding rect relative to the list's rect and imperatively sets snake.style.left and snake.style.width (NO React state — direct DOM mutation, avoids "setState in effect" lint rule).
+  * On mouse leave of nav, snake returns to the active page item.
+  * Window resize listener recomputes position.
+- CSS: snake has transition: left 0.35s cubic-bezier(0.4,0,0.2,1), width 0.35s cubic-bezier(0.4,0,0.2,1), opacity 0.2s. Height 4px, coral #e85235, attached to bottom of menu list (which spans the full header height). Removed per-item ::after pseudo-element (no longer needed).
+- Mobile: snake hidden via display:none (mobile uses its own dark-theme highlight style).
+- Enlarged partner logos per Figma:
+  * Container: 5-col grid, gap 50px, each cell min-height 160px with 1px border + 20px×30px padding.
+  * Image: max-height 140px (was 80px), opacity 0.85, no grayscale filter (was grayscale 100%).
+  * Hover: coral border tint + soft shadow + scale(1.06) on image.
+  * Responsive: 3-col on tablet (max-height 100px), 2-col on mobile (max-height 80px).
+- Lint: 0 errors after replacing setIndicator state with imperative DOM updates (the only fix needed was removing setState calls from useLayoutEffect).
+- Verified via agent-browser + VLM:
+  * Click "Продукция" -> snake under "Продукция".
+  * Hover "Услуги" -> snake slides to "Услуги".
+  * Hover "Проекты" -> snake slides to "Проекты".
+  * Mouse leave -> snake returns to "Продукция".
+  * Clients section: 5 logos in a row, all readable (ЕВРАЗ, БЭТ, ВОСТОКЦЕМЕНТ, Корфовский каменный карьер, ПДВ), inside bordered cards.
+
+Stage Summary:
+- Snake underline implemented: one shared coral bar at the bottom of the header that smoothly slides between menu items on hover, returns to active item on mouse leave. Smooth cubic-bezier 0.35s transition gives the "snake" effect requested.
+- Partner logos enlarged ~75% (max-height 80→140px), wrapped in bordered cards, no longer grayscale, fully readable.
