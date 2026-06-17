@@ -124,3 +124,26 @@ Work Log:
 Stage Summary:
 - Menu reduced from 7 to 4 items (removed Продукция, Вакансии, Новости — both from nav and from page routing).
 - Snake underline now correctly pinned to the very bottom edge of the header, slides between menu items on hover with smooth 0.35s cubic-bezier transition.
+
+---
+Task ID: 16
+Agent: main
+Task: Snake no longer follows cursor — only jumps after click. Fades out smoothly on return to home page.
+
+Work Log:
+- Removed `hovered` state and all onMouseEnter/onFocus/onMouseLeave handlers from Header.tsx.
+- positionSnake() now uses ONLY `current` (active page) as the target. Removed the `hovered ?? current` fallback.
+- Added explicit home-page handling: if current === 'home', set snake.style.opacity = '0' and return early (no position update, so the snake fades out in place rather than sliding back to position 0).
+- Increased opacity transition from 0.2s to 0.45s for a smoother fade-out effect.
+- Removed unused onMouseLeave handler from <nav> wrapper.
+- Verified via agent-browser eval:
+  * On home page load: snake opacity=0 (hidden). ✅
+  * Click "О компании": snake jumps to left=692px, opacity=1. ✅
+  * Hover "Услуги" (no click): snake STAYS at left=692px (doesn't follow cursor). ✅
+  * Click "Услуги": snake jumps to left=821px. ✅
+  * Click logo (return home): opacity set to 0 immediately, CSS transition 0.45s animates the fade-out. Snake position stays at last item, just fades away. ✅
+- Hover still changes text color to coral for visual feedback (kept the existing .dv-menu__item a:hover { color: var(--dv-brand) } rule).
+- Lint: 0 errors.
+
+Stage Summary:
+- Snake behavior now: (1) hidden on home page, (2) jumps only on click, (3) doesn't track cursor, (4) fades out smoothly (0.45s) when returning to home page.

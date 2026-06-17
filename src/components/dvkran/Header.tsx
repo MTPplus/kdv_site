@@ -11,7 +11,6 @@ interface HeaderProps {
 export function Header({ current, onNavigate }: HeaderProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [lang, setLang] = useState<'ru' | 'en'>('ru');
-  const [hovered, setHovered] = useState<PageId | null>(null);
 
   // Refs to each menu link + the snake indicator element
   const linkRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
@@ -30,16 +29,25 @@ export function Header({ current, onNavigate }: HeaderProps) {
     };
   }, [mobileOpen]);
 
-  // Position the snake indicator imperatively — pinned to the bottom of the header,
-  // left/width matches the active (or hovered) menu item.
-  // We update DOM directly without setState to avoid the "setState in effect" lint rule
-  // AND to get smoother animation (no React re-render).
+  // Position the snake indicator imperatively.
+  // Snake does NOT follow the cursor — it only jumps to the currently active page item.
+  // On the home page, the snake fades out (no active menu item).
   const positionSnake = () => {
-    const targetId = hovered ?? current;
-    const link = linkRefs.current[targetId];
     const header = headerRef.current;
     const snake = snakeRef.current;
-    if (!link || !header || !snake) return;
+    if (!header || !snake) return;
+
+    // On the home page, hide the snake with a smooth fade.
+    if (current === 'home') {
+      snake.style.opacity = '0';
+      return;
+    }
+
+    const link = linkRefs.current[current];
+    if (!link) {
+      snake.style.opacity = '0';
+      return;
+    }
 
     const linkRect = link.getBoundingClientRect();
     const headerRect = header.getBoundingClientRect();
@@ -50,32 +58,30 @@ export function Header({ current, onNavigate }: HeaderProps) {
 
   useLayoutEffect(() => {
     positionSnake();
-  }, [hovered, current]);
+  }, [current]);
 
-  // Recompute on resize
+  // Recompute on resize (only repositions if there's an active item)
   useEffect(() => {
     const handleResize = () => positionSnake();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, [hovered, current]);
+  }, [current]);
 
   const handleNav = (page: PageId) => {
     onNavigate(page);
     setMobileOpen(false);
-    setHovered(null);
   };
 
   const handleHome = () => {
     onNavigate('home');
     setMobileOpen(false);
-    setHovered(null);
   };
 
   return (
     <header ref={headerRef} className="dv-header">
       {/* Snake indicator: a single coral bar pinned to the very bottom of the header.
-          It slides left/width between menu items with smooth transition.
-          Lives directly inside .dv-header so bottom:0 == bottom of header. */}
+          Jumps to the active menu item after click. No hover tracking.
+          Fades out smoothly when on the home page. */}
       <div
         ref={snakeRef}
         className="dv-menu__snake"
@@ -104,10 +110,7 @@ export function Header({ current, onNavigate }: HeaderProps) {
             aria-label="КРАН-ДВ — на главную"
           ></a>
 
-          <nav
-            className={`dv-menu${mobileOpen ? ' open' : ''}`}
-            onMouseLeave={() => setHovered(null)}
-          >
+          <nav className={`dv-menu${mobileOpen ? ' open' : ''}`}>
             <ul className="dv-menu__list">
               {NAV_ITEMS.map((item) => (
                 <li
@@ -123,8 +126,6 @@ export function Header({ current, onNavigate }: HeaderProps) {
                       e.preventDefault();
                       handleNav(item.id);
                     }}
-                    onMouseEnter={() => setHovered(item.id)}
-                    onFocus={() => setHovered(item.id)}
                   >
                     {item.label}
                   </a>
