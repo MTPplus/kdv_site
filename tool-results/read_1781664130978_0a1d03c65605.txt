@@ -1,0 +1,400 @@
+     1→
+     2→
+     3→========== О компании (dvkran_o-kompanii.html) ==========
+     4→
+     5→<div class="page page-about">
+     6→        <div class="container">
+     7→            <div class="page__breadcrumbs breadcrumbs"></div>
+     8→            <div class="page__title">О компании</div>
+     9→        </div>
+    10→    </div>
+    11→    <section class="single-section">
+    12→        <div class="single">
+    13→            <div class="container">
+    14→                <div class="word-seo">
+    15→                    <div class="word-seo__content">
+    16→                        <div class="word-seo__text">
+    17→                            Инжиниринговая компания полного цикла «Микротерм Плюс» успешно специализируется на проектировании и технической разработке в области промышленной автоматизации с 2002 года. За прошедшие годы, мы достигли больших успехов, реализовали множество масштабных проектов, получили ценный опыт и наработали тесные партнерские отношения со многими российскими и иностранными компаниями. Но мы не останавливаемся на достигнутом! Мы растем, становимся продуктивнее и продолжаем аккумулировать экспертный опыт, чтобы передавать его нашим заказчикам. Наша цель стать еще более эффективной компанией, для реализации новых амбициозных задач, придерживаясь высочайших стандартов качества.<br>
+    18→                            Основа успеха нашей компании — это сплоченная команда. Профессионалы, нацеленные на высокий результат, которые любят свою профессию, постоянно развиваются и изучают новые технологии. Из заслуг каждого состоит наш общий успех.<br>
+    19→                            Новая санкционная реальность создает целый ряд ограничений. Перед российскими производителями встал вопрос о выборе стратегии дальнейшего развития. Значительная часть устоявшихся подходов в инжиниринге требует пересмотра привычных решений. Имея многолетний практический опыт, мы готовы поддержать своих заказчиков в вопросах импортонезависимости в эксплуатации иностранного оборудования и систем, а также их дальнейшей модернизации.
+    20→                        </div>
+    21→                        <div class="word-seo__signature">Генеральный директор ООО «Микротерм Плюс»<br>Атясов Олег Валерьевич</div>
+    22→                        <div class="word-seo__photo"></div>
+    23→                    </div>
+    24→                </div>
+    25→                <div class="industry__title site-title">Индустрии и география реализованных проектов</div>
+    26→                <div class="frow">
+    27→                    <div class="industry fcol">
+    28→                        <div class="industry__content">
+    29→                            <ul class="industry__list lispan">
+    30→                                <li class="industry__text"><span>Промышленность строительных материалов</span></li>
+    31→                                <li class="industry__text"><span>Лесообрабатывающая промышленность</span></li>
+    32→                                <li class="industry__text"><span>Производство подъемно-транспортного<br>оборудования</span></li>
+    33→                                <li class="industry__text"><span>Машиностроение и металлообработка</span></li>
+    34→                                <li class="industry__text"><span>Горнодобывающая промышленность</span></li>
+    35→                                <li class="industry__text"><span>Нефтехимическая промышленность</span></li>
+    36→                                <li class="industry__text"><span>Транспортные узлы и терминалы</span></li>
+    37→                                <li class="industry__text"><span>Угольная промышленность</span></li>
+    38→                                <li class="industry__text"><span>Пищевая промышленность</span></li>
+    39→                                <li class="industry__text"><span>Легкая промышленность</span></li>
+    40→                                <li class="industry__text"><span>Электроэнергетика</span></li>
+    41→                            </ul>
+    42→                        </div>
+    43→                    </div>
+    44→                    <div class="geography fcol">
+    45→                        <div class="geography__content">
+    46→                            <div class="geography__map">
+    47→                                <img src="https://dvkran.ru/wp-content/themes/mikrotermplus/images/dev/resmap.png" alt="География реализованных проектов">
+    48→                            </div>
+    49→                        </div>
+    50→                    </div>
+    51→                </div>
+    52→                <div class="mt-today">
+    53→                    <div class="mt-today__title site-title"><span class="site-title--highlight">МИКРОТЕРМ ПЛЮС</span> сегодня</div>
+    54→                    <div class="mt-today__contant">
+    55→                        <div class="tiles">
+    56→                            <div class="tile">
+    57→                                <img src="https://dvkran.ru/wp-content/themes/mikrotermplus/images/dev/res1.svg" alt="20 лет на рынке автоматизации">
+    58→                                <div class="tile__undertext">
+    59→                                    20 лет на рынке автоматизации
+    60→                                </div>
+    61→                            </div>
+    62→                            <div class="tile">
+    63→                                <img src="https://dvkran.ru/wp-content/themes/mikrotermplus/images/dev/res2.svg" alt="Более 200 реализованных проектов">
+    64→                                <div class="tile__undertext">
+    65→                                    Более 200 реализованных проектов
+    66→                                </div>
+    67→                            </div>
+    68→                            <div class="tile">
+    69→                                <img src="https://dvkran.ru/wp-content/themes/mikrotermplus/images/dev/res3.svg" alt="География проектов охватывает всю Россию">
+    70→                                <div class="tile__undertext">
+    71→                                    География проектов охватывает всю Россию
+    72→                                </div>
+    73→                            </div>
+    74→                            <div class="tile">
+    75→                                <img src="https://dvkran.ru/wp-content/themes/mikrotermplus/images/dev/res4.svg" alt="Точное соблюдение сроков производства работ">
+    76→                                <div class="tile__undertext">
+    77→                                    Точное соблюдение сроков производства работ
+    78→                                </div>
+    79→                            </div>
+    80→                            <div class="tile">
+    81→                                <img src="https://dvkran.ru/wp-content/themes/mikrotermplus/images/dev/res5.svg" alt="Открытый диалог с заказчиком">
+    82→                                <div class="tile__undertext">
+    83→                                    Открытый диалог с заказчиком
+    84→                                </div>
+    85→                            </div>
+    86→                            <div class="tile">
+    87→                                <img src="https://dvkran.ru/wp-content/themes/mikrotermplus/images/dev/res6.svg" alt="Качество с мировым именем">
+    88→                                <div class="tile__undertext">
+    89→                                    Качество с мировым именем
+    90→                                </div>
+    91→                            </div>
+    92→                            <div class="tile">
+    93→                                <img src="https://dvkran.ru/wp-content/themes/mikrotermplus/images/dev/res7.svg" alt="Квалифицированные инженерные кадры">
+    94→                                <div class="tile__undertext">
+    95→                                    Квалифицированные инженерные кадры
+    96→                                </div>
+    97→                            </div>
+    98→                            <div class="tile">
+    99→                                <img src="https://dvkran.ru/wp-content/themes/mikrotermplus/images/dev/res8.svg" alt="Сертификация по международным стандартам">
+   100→                                <div class="tile__undertext">
+   101→                                    Сертификация по международным стандартам
+   102→                                </div>
+   103→                            </div>
+   104→                        </div>
+   105→                    </div>
+   106→                </div>
+   107→                                                    <div class="industry__title site-title">Сертификаты и благодарственные письма</div>
+   108→                    <div class="sert">
+   109→                        <div class="sert__content">
+   110→                            <div class="sert__gallery">
+   111→                                <div class="sert__slider gallery__list">
+   112→                                                                            <a href="https://dvkran.ru/wp-content/uploads/2023/05/sert15.jpg" class="sert__slide gallery__item" data-fancybox>
+   113→                                            <img src="https://dvkran.ru/wp-content/uploads/2023/05/sert15.jpg">
+   114→                                        </a>
+   115→                                                                            <a href="https://dvkran.ru/wp-content/uploads/2023/05/sert14.jpg" class="sert__slide gallery__item" data-fancybox>
+   116→                                            <img src="https://dvkran.ru/wp-content/uploads/2023/05/sert14.jpg">
+   117→                                        </a>
+   118→                                                                            <a href="https://dvkran.ru/wp-content/uploads/2023/05/sert13.jpg" class="sert__slide gallery__item" data-fancybox>
+   119→                                            <img src="https://dvkran.ru/wp-content/uploads/2023/05/sert13.jpg">
+   120→                                        </a>
+   121→                                                                            <a href="https://dvkran.ru/wp-content/uploads/2023/05/sert12.jpg" class="sert__slide gallery__item" data-fancybox>
+   122→                                            <img src="https://dvkran.ru/wp-content/uploads/2023/05/sert12.jpg">
+   123→                                        </a>
+   124→                                                                            <a href="https://dvkran.ru/wp-content/uploads/2023/05/sert11.jpg" class="sert__slide gallery__item" data-fancybox>
+   125→                                            <img src="https://dvkran.ru/wp-content/uploads/2023/05/sert11.jpg">
+   126→                                        </a>
+   127→                                                                            <a href="https://dvkran.ru/wp-content/uploads/2023/05/sert10.jpg" class="sert__slide gallery__item" data-fancybox>
+   128→                                            <img src="https://dvkran.ru/wp-content/uploads/2023/05/sert10.jpg">
+   129→                                        </a>
+   130→                                                                            <a href="https://dvkran.ru/wp-content/uploads/2023/05/sert9.jpg" class="sert__slide gallery__item" data-fancybox>
+   131→                                            <img src="https://dvkran.ru/wp-content/uploads/2023/05/sert9.jpg">
+   132→                                        </a>
+   133→                                                                            <a href="https://dvkran.ru/wp-content/uploads/2023/05/sert8.jpg" class="sert__slide gallery__item" data-fancybox>
+   134→                                            <img src="https://dvkran.ru/wp-content/uploads/2023/05/sert8.jpg">
+   135→                                        </a>
+   136→                                                                            <a href="https://dvkran.ru/wp-content/uploads/2023/05/sert7.jpg" class="sert__slide gallery__item" data-fancybox>
+   137→                                            <img src="https://dvkran.ru/wp-content/uploads/2023/05/sert7.jpg">
+   138→                                        </a>
+   139→                                                                            <a href="https://dvkran.ru/wp-content/uploads/2023/05/sert6.jpg" class="sert__slide gallery__item" data-fancybox>
+   140→                                            <img src="https://dvkran.ru/wp-content/uploads/2023/05/sert6.jpg">
+   141→                                        </a>
+   142→                                                                            <a href="https://dvkran.ru/wp-content/uploads/2023/05/sert5.jpg" class="sert__slide gallery__item" data-fancybox>
+   143→                                            <img src="https://dvkran.ru/wp-content/uploads/2023/05/sert5.jpg">
+   144→                                        </a>
+   145→                                                                            <a href="https://dvkran.ru/wp-content/uploads/2023/05/sert4.jpg" class="sert__slide gallery__item" data-fancybox>
+   146→                                            <img src="https://dvkran.ru/wp-content/uploads/2023/05/sert4.jpg">
+   147→                                        </a>
+   148→                                                                            <a href="https://dvkran.ru/wp-content/uploads/2023/05/sert3.jpg" class="sert__slide gallery__item" data-fancybox>
+   149→                                            <img src="https://dvkran.ru/wp-content/uploads/2023/05/sert3.jpg">
+   150→                                        </a>
+   151→                                                                            <a href="https://dvkran.ru/wp-content/uploads/2023/05/sert2.jpg" class="sert__slide gallery__item" data-fancybox>
+   152→                                            <img src="https://dvkran.ru/wp-content/uploads/2023/05/sert2.jpg">
+   153→                                        </a>
+   154→                                                                            <a href="https://dvkran.ru/wp-content/uploads/2023/05/sert1.jpg" class="sert__slide gallery__item" data-fancybox>
+   155→                                            <img src="https://dvkran.ru/wp-content/uploads/2023/05/sert1.jpg">
+   156→                                        </a>
+   157→                                                                            <a href="https://dvkran.ru/wp-content/uploads/2023/05/review5.jpg" class="sert__slide gallery__item" data-fancybox>
+   158→                                            <img src="https://dvkran.ru/wp-content/uploads/2023/05/review5.jpg">
+   159→                                        </a>
+   160→                                                                            <a href="https://dvkran.ru/wp-content/uploads/2023/05/review4.jpg" class="sert__slide gallery__item" data-fancybox>
+   161→                                            <img src="https://dvkran.ru/wp-content/uploads/2023/05/review4.jpg">
+   162→                                        </a>
+   163→                                                                            <a href="https://dvkran.ru/wp-content/uploads/2023/05/review3.jpg" class="sert__slide gallery__item" data-fancybox>
+   164→                                            <img src="https://dvkran.ru/wp-content/uploads/2023/05/review3.jpg">
+   165→                                        </a>
+   166→                                                                            <a href="https://dvkran.ru/wp-content/uploads/2023/05/review2.jpg" class="sert__slide gallery__item" data-fancybox>
+   167→                                            <img src="https://dvkran.ru/wp-content/uploads/2023/05/review2.jpg">
+   168→                                        </a>
+   169→                                                                            <a href="https://dvkran.ru/wp-content/uploads/2023/05/review1.jpg" class="sert__slide gallery__item" data-fancybox>
+   170→                                            <img src="https://dvkran.ru/wp-content/uploads/2023/05/review1.jpg">
+   171→                                        </a>
+   172→                                                                    </div>
+   173→                                <div class="gallery__navigate">
+   174→                                    <div class="arrow-left gallery__left"></div>
+   175→                                    <div class="gallery__counter">2 из 5</div>
+   176→                                    <div class="arrow-right gallery__right"></div>
+   177→                                </div>
+   178→                            </div>
+   179→                        </div>
+   180→                    </div>
+   181→                                <!-- <div class="single__image"><img width="2000" height="1444" src="https://dvkran.ru/wp-content/uploads/2019/12/kompleknaya_avtomatizaciya_1.jpg" class="attachment-full size-full wp-post-image" alt="" srcset="https://dvkran.ru/wp-content/uploads/2019/12/kompleknaya_avtomatizaciya_1.jpg 2000w, https://dvkran.ru/wp-content/uploads/2019/12/kompleknaya_avtomatizaciya_1-300x217.jpg 300w, https://dvkran.ru/wp-content/uploads/2019/12/kompleknaya_avtomatizaciya_1-1024x739.jpg 1024w, https://dvkran.ru/wp-content/uploads/2019/12/kompleknaya_avtomatizaciya_1-768x554.jpg 768w, https://dvkran.ru/wp-content/uploads/2019/12/kompleknaya_avtomatizaciya_1-1536x1109.jpg 1536w" sizes="(max-width: 2000px) 100vw, 2000px" /></div> -->
+   182→                <!-- <div class="single__body">
+   183→                    <section class="about-section">
+   184→                        <div class="about">
+   185→                            <div class="about__text"><p>Инжиниринговая компания ООО &#171;МИКРОТЕРМ ПЛЮС&#187; создает современные и надежные автоматизированные системы управления различного назначения с 2002 года. Являясь промышленным партнером немецкой компании &#171;Siemens&#187; &#8212; мы реализуем профессиональные, гибкие, комплексные решения с применением инновационных технологий и интеллектуального оборудования для промышленной автоматизации, воплощаем индивидуальные и гибкие решения в поставленных задачах, используя накопленный опыт и творческий подход.</p>
+   186→</div>
+   187→                            <div class="clear"></div>
+   188→                            <div class="about__text"><p><strong>Мы имеем опыт создания автоматизированных систем управления технологическими процессами в различных отраслях: </strong></p>
+   189→<ul>
+   190→<li>строительной: автоматизация всех технологических процессов железобетонных заводов и комплексная модернизация бетонорастворных узлов);</li>
+   191→<li>станкостроение: создание систем управления станками и технологическими линиями, системы ЧПУ;</li>
+   192→<li>железной дороге: мониторинг и оптимизация тяговосцепных характеристик секций тепловозов;</li>
+   193→<li>аграрной промышленности: системы управления микроклиматом в птичниках, теплицах, инкубаторах; энергетике: системы технического учета электроэнергии, распределенное управление потреблением электроэнергии, АВР, синхронизация работы дизель-генератора;</li>
+   194→<li>в социальной сфере: системы управления вентиляцией, отоплением.</li>
+   195→</ul>
+   196→</div>
+   197→                            <div class="about__gallery gallery2">
+   198→                                <div class="gallery2__list">
+   199→                                                                                                        </div>
+   200→                                <div class="gallery2__navigate">
+   201→                                    <div class="arrow-left gallery2__left"></div>
+   202→                                    <div class="gallery2__counter">2 из 5</div>
+   203→                                    <div class="arrow-right gallery2__right"></div>
+   204→                                </div>
+   205→                            </div>
+   206→                            <div class="about__text"></div>
+   207→                        </div>
+   208→                    </section>
+   209→                </div> -->
+   210→            </div>
+   211→        </div>
+   212→    </section>
+   213→
+   214→
+   215→========== Продукция (dvkran_products.html) ==========
+   216→
+   217→<div class="page">
+   218→        <div class="container">
+   219→            <div class="page__breadcrumbs breadcrumbs"></div>
+   220→            <div class="page__title">Услуги компании</div>
+   221→        </div>
+   222→    </div>
+   223→
+   224→            <div class="services">
+   225→            <div class="container">
+   226→                <div class="services__tile">
+   227→                                            <div class="services__item single-element">
+   228→    <div class="single-element__image">
+   229→        <img width="1280" height="608" src="https://dvkran.ru/wp-content/uploads/2023/09/rectangle-24.png" class="attachment-full size-full wp-post-image" alt="" srcset="https://dvkran.ru/wp-content/uploads/2023/09/rectangle-24.png 1280w, https://dvkran.ru/wp-content/uploads/2023/09/rectangle-24-300x143.png 300w, https://dvkran.ru/wp-content/uploads/2023/09/rectangle-24-1024x486.png 1024w, https://dvkran.ru/wp-content/uploads/2023/09/rectangle-24-768x365.png 768w" sizes="(max-width: 1280px) 100vw, 1280px" />    </div>
+   230→    <div class="single-element__title">Тестовая продукция</div>
+   231→    <div class="single-element__excerpt">
+   232→            </div>
+   233→    <a href="https://dvkran.ru/products/testovaya-produkcziya/" class="button-transparent single-element__button">Подробнее</a>
+   234→</div>                                    </div>
+   235→                            </div>
+   236→        </div>
+   237→
+   238→
+   239→========== Услуги (dvkran_service.html) ==========
+   240→
+   241→<div class="page">
+   242→        <div class="container">
+   243→            <div class="page__breadcrumbs breadcrumbs"></div>
+   244→            <div class="page__title">Услуги компании</div>
+   245→        </div>
+   246→    </div>
+   247→
+   248→            <div class="services">
+   249→            <div class="container">
+   250→                <div class="services__tile">
+   251→                                            <div class="services__item single-element">
+   252→    <div class="single-element__image">
+   253→        <img width="1706" height="1166" src="https://dvkran.ru/wp-content/uploads/2023/05/2.-tehnicheskij-audit-proizvodstva.jpg" class="attachment-full size-full wp-post-image" alt="" srcset="https://dvkran.ru/wp-content/uploads/2023/05/2.-tehnicheskij-audit-proizvodstva.jpg 1706w, https://dvkran.ru/wp-content/uploads/2023/05/2.-tehnicheskij-audit-proizvodstva-300x205.jpg 300w, https://dvkran.ru/wp-content/uploads/2023/05/2.-tehnicheskij-audit-proizvodstva-1024x700.jpg 1024w, https://dvkran.ru/wp-content/uploads/2023/05/2.-tehnicheskij-audit-proizvodstva-768x525.jpg 768w, https://dvkran.ru/wp-content/uploads/2023/05/2.-tehnicheskij-audit-proizvodstva-1536x1050.jpg 1536w" sizes="(max-width: 1706px) 100vw, 1706px" />    </div>
+   254→    <div class="single-element__title">Технический аудит производства и подготовка технического задания</div>
+   255→    <div class="single-element__excerpt">
+   256→            </div>
+   257→    <a href="https://dvkran.ru/service/tehnicheskij-audit-proizvodstva-i-podgotovka-tehnicheskogo-zadaniya/" class="button-transparent single-element__button">Подробнее</a>
+   258→</div>                                            <div class="services__item single-element">
+   259→    <div class="single-element__image">
+   260→        <img width="465" height="298" src="https://dvkran.ru/wp-content/uploads/2019/11/service-1.png" class="attachment-full size-full wp-post-image" alt="" srcset="https://dvkran.ru/wp-content/uploads/2019/11/service-1.png 465w, https://dvkran.ru/wp-content/uploads/2019/11/service-1-300x192.png 300w" sizes="(max-width: 465px) 100vw, 465px" />    </div>
+   261→    <div class="single-element__title">Разработка проектно-технической документации</div>
+   262→    <div class="single-element__excerpt">
+   263→            </div>
+   264→    <a href="https://dvkran.ru/service/razrabotka-proektno-tehnicheskoj-dokumentaczii/" class="button-transparent single-element__button">Подробнее</a>
+   265→</div>                                            <div class="services__item single-element">
+   266→    <div class="single-element__image">
+   267→        <img width="1170" height="468" src="https://dvkran.ru/wp-content/uploads/2019/12/fuse-1-e1456753938959.jpg" class="attachment-full size-full wp-post-image" alt="" srcset="https://dvkran.ru/wp-content/uploads/2019/12/fuse-1-e1456753938959.jpg 1170w, https://dvkran.ru/wp-content/uploads/2019/12/fuse-1-e1456753938959-300x120.jpg 300w, https://dvkran.ru/wp-content/uploads/2019/12/fuse-1-e1456753938959-1024x410.jpg 1024w, https://dvkran.ru/wp-content/uploads/2019/12/fuse-1-e1456753938959-768x307.jpg 768w" sizes="(max-width: 1170px) 100vw, 1170px" />    </div>
+   268→    <div class="single-element__title">Собственное производство комплексных шкафов автоматики</div>
+   269→    <div class="single-element__excerpt">
+   270→            </div>
+   271→    <a href="https://dvkran.ru/service/sobstvennoe-proizvodstvo-kompleksnyh-shkafov-avtomatiki/" class="button-transparent single-element__button">Подробнее</a>
+   272→</div>                                            <div class="services__item single-element">
+   273→    <div class="single-element__image">
+   274→        <img width="1200" height="787" src="https://dvkran.ru/wp-content/uploads/2023/05/4.2-razrabotka-po.jpg" class="attachment-full size-full wp-post-image" alt="" srcset="https://dvkran.ru/wp-content/uploads/2023/05/4.2-razrabotka-po.jpg 1200w, https://dvkran.ru/wp-content/uploads/2023/05/4.2-razrabotka-po-300x197.jpg 300w, https://dvkran.ru/wp-content/uploads/2023/05/4.2-razrabotka-po-1024x672.jpg 1024w, https://dvkran.ru/wp-content/uploads/2023/05/4.2-razrabotka-po-768x504.jpg 768w" sizes="(max-width: 1200px) 100vw, 1200px" />    </div>
+   275→    <div class="single-element__title">Разработка программного обеспечения среднего и верхнего уровня</div>
+   276→    <div class="single-element__excerpt">
+   277→            </div>
+   278→    <a href="https://dvkran.ru/service/razrabotka-programmnogo-obespecheniya-srednego-i-verhnego-urovnya/" class="button-transparent single-element__button">Подробнее</a>
+   279→</div>                                            <div class="services__item single-element">
+   280→    <div class="single-element__image">
+   281→        <img width="1690" height="1124" src="https://dvkran.ru/wp-content/uploads/2019/12/shef_montazhnye_raboty.jpg" class="attachment-full size-full wp-post-image" alt="" srcset="https://dvkran.ru/wp-content/uploads/2019/12/shef_montazhnye_raboty.jpg 1690w, https://dvkran.ru/wp-content/uploads/2019/12/shef_montazhnye_raboty-300x200.jpg 300w, https://dvkran.ru/wp-content/uploads/2019/12/shef_montazhnye_raboty-1024x681.jpg 1024w, https://dvkran.ru/wp-content/uploads/2019/12/shef_montazhnye_raboty-768x511.jpg 768w, https://dvkran.ru/wp-content/uploads/2019/12/shef_montazhnye_raboty-1536x1022.jpg 1536w" sizes="(max-width: 1690px) 100vw, 1690px" />    </div>
+   282→    <div class="single-element__title">Шеф-монтажные работы</div>
+   283→    <div class="single-element__excerpt">
+   284→            </div>
+   285→    <a href="https://dvkran.ru/service/shef-montazhnye-raboty/" class="button-transparent single-element__button">Подробнее</a>
+   286→</div>                                            <div class="services__item single-element">
+   287→    <div class="single-element__image">
+   288→        <img width="1170" height="658" src="https://dvkran.ru/wp-content/uploads/2023/05/7.-garantijnoe-i-servisnoe-obsluzhivanie.jpg" class="attachment-full size-full wp-post-image" alt="" srcset="https://dvkran.ru/wp-content/uploads/2023/05/7.-garantijnoe-i-servisnoe-obsluzhivanie.jpg 1170w, https://dvkran.ru/wp-content/uploads/2023/05/7.-garantijnoe-i-servisnoe-obsluzhivanie-300x169.jpg 300w, https://dvkran.ru/wp-content/uploads/2023/05/7.-garantijnoe-i-servisnoe-obsluzhivanie-1024x576.jpg 1024w, https://dvkran.ru/wp-content/uploads/2023/05/7.-garantijnoe-i-servisnoe-obsluzhivanie-768x432.jpg 768w" sizes="(max-width: 1170px) 100vw, 1170px" />    </div>
+   289→    <div class="single-element__title">Гарантийное и сервисное обслуживание</div>
+   290→    <div class="single-element__excerpt">
+   291→            </div>
+   292→    <a href="https://dvkran.ru/service/garantijnoe-i-servisnoe-obsluzhivanie/" class="button-transparent single-element__button">Подробнее</a>
+   293→</div>                                            <div class="services__item single-element">
+   294→    <div class="single-element__image">
+   295→        <img width="1200" height="675" src="https://dvkran.ru/wp-content/uploads/2023/05/8.-udalennyj-monitoring.jpg" class="attachment-full size-full wp-post-image" alt="" srcset="https://dvkran.ru/wp-content/uploads/2023/05/8.-udalennyj-monitoring.jpg 1200w, https://dvkran.ru/wp-content/uploads/2023/05/8.-udalennyj-monitoring-300x169.jpg 300w, https://dvkran.ru/wp-content/uploads/2023/05/8.-udalennyj-monitoring-1024x576.jpg 1024w, https://dvkran.ru/wp-content/uploads/2023/05/8.-udalennyj-monitoring-768x432.jpg 768w" sizes="(max-width: 1200px) 100vw, 1200px" />    </div>
+   296→    <div class="single-element__title">Удаленный мониторинг и диагностика оборудования</div>
+   297→    <div class="single-element__excerpt">
+   298→            </div>
+   299→    <a href="https://dvkran.ru/service/udalennyj-monitoring-i-diagnostika-oborudovaniya/" class="button-transparent single-element__button">Подробнее</a>
+   300→</div>                                            <div class="services__item single-element">
+   301→    <div class="single-element__image">
+   302→        <img width="960" height="483" src="https://dvkran.ru/wp-content/uploads/2019/12/1497354707_marketing-top2.jpg" class="attachment-full size-full wp-post-image" alt="" srcset="https://dvkran.ru/wp-content/uploads/2019/12/1497354707_marketing-top2.jpg 960w, https://dvkran.ru/wp-content/uploads/2019/12/1497354707_marketing-top2-300x151.jpg 300w, https://dvkran.ru/wp-content/uploads/2019/12/1497354707_marketing-top2-768x386.jpg 768w" sizes="(max-width: 960px) 100vw, 960px" />    </div>
+   303→    <div class="single-element__title">Импортозамещение и локальная техподдержка</div>
+   304→    <div class="single-element__excerpt">
+   305→            </div>
+   306→    <a href="https://dvkran.ru/service/lokalnaya-tehnicheskaya-podderzhka-i-importozameshhenie/" class="button-transparent single-element__button">Подробнее</a>
+   307→</div>                                    </div>
+   308→                                <p style="text-align: center; margin-bottom: 75px;"><a style="color: #ee7a04;" class="button-transparent" href="https://drive.google.com/file/d/1HalIDIAwc5oqhoHxim3A78mnr8v51ahx/view?usp=sharing" target="_blank">Cкачать референс-лист</a></p>
+   309→            </div>
+   310→        </div>
+   311→
+   312→
+   313→========== Проекты (dvkran_project.html) ==========
+   314→
+   315→<div class="page projects">
+   316→        <div class="container">
+   317→            <div class="page__breadcrumbs breadcrumbs"></div>
+   318→            <div class="page__title">Портфолио выполненных проектов</div>
+   319→            <div class="project-filter">
+   320→                <div class="project-filter__label">Выбрать по направлению:</div>
+   321→                <select class="project-filter__select" name="project-filter">
+   322→                    <option value="0">Все</option>
+   323→                                                                <option value="4" selected>Модернизация станков и оборудования</option>
+   324→                                            <option value="5">Модернизация подъемно-транспортного оборудования</option>
+   325→                                            <option value="6">Автоматизация технологических процессов</option>
+   326→                                            <option value="7">Дробометное оборудование</option>
+   327→                                    </select>
+   328→                <div class="button project-filter__button">Показать все</div>
+   329→            </div>
+   330→        </div>
+   331→    </div>
+   332→
+   333→            <section class="projects-section">
+   334→            <div class="portfolio">
+   335→                <div class="container">
+   336→                    <div class="portfolio__tile">
+   337→                                                    <div class="portfolio__item">
+   338→    <div class="portfolio__wrapper">
+   339→        <div class="portfolio__info">
+   340→            <div class="portfolio__case"><span>Автоматизация технологических процессов </span>Handling Equipment Modification</div>
+   341→            <div class="portfolio__item-title">
+   342→                Модернизация систем управления двумя станками  поперечной резки гофрокартона.            </div>
+   343→            <div class="portfolio__exerpt">
+   344→                                                                                                            </div>
+   345→            <a href="https://dvkran.ru/project/modernizacziya-sistem-upravleniya-dvumya-stankami-poperechnoj-rezki-gofrokartona/" class="button-transparent portfolio__button">Подробнее</a>
+   346→        </div>
+   347→        <div class="portfolio__image">
+   348→            <img width="1200" height="800" src="https://dvkran.ru/wp-content/uploads/2019/12/image-10.jpg" class="attachment-full size-full wp-post-image" alt="" srcset="https://dvkran.ru/wp-content/uploads/2019/12/image-10.jpg 1200w, https://dvkran.ru/wp-content/uploads/2019/12/image-10-300x200.jpg 300w, https://dvkran.ru/wp-content/uploads/2019/12/image-10-1024x683.jpg 1024w, https://dvkran.ru/wp-content/uploads/2019/12/image-10-768x512.jpg 768w" sizes="(max-width: 1200px) 100vw, 1200px" />        </div>
+   349→    </div>
+   350→</div>                                                    <div class="portfolio__item">
+   351→    <div class="portfolio__wrapper">
+   352→        <div class="portfolio__info">
+   353→            <div class="portfolio__case"><span>Автоматизация технологических процессов </span>Machinery Modification</div>
+   354→            <div class="portfolio__item-title">
+   355→                Восстановление работоспособности производственной линии склейки бруса.            </div>
+   356→            <div class="portfolio__exerpt">
+   357→                                                                                                            </div>
+   358→            <a href="https://dvkran.ru/project/vosstanovlenie-rabotosposobnosti-proizvodstvennoj-linii-sklejki-brusa/" class="button-transparent portfolio__button">Подробнее</a>
+   359→        </div>
+   360→        <div class="portfolio__image">
+   361→            <img width="2517" height="1667" src="https://dvkran.ru/wp-content/uploads/2019/12/production-line-for-timber-gluing-1.jpg" class="attachment-full size-full wp-post-image" alt="" srcset="https://dvkran.ru/wp-content/uploads/2019/12/production-line-for-timber-gluing-1.jpg 2517w, https://dvkran.ru/wp-content/uploads/2019/12/production-line-for-timber-gluing-1-300x199.jpg 300w, https://dvkran.ru/wp-content/uploads/2019/12/production-line-for-timber-gluing-1-1024x678.jpg 1024w, https://dvkran.ru/wp-content/uploads/2019/12/production-line-for-timber-gluing-1-768x509.jpg 768w, https://dvkran.ru/wp-content/uploads/2019/12/production-line-for-timber-gluing-1-1536x1017.jpg 1536w, https://dvkran.ru/wp-content/uploads/2019/12/production-line-for-timber-gluing-1-2048x1356.jpg 2048w" sizes="(max-width: 2517px) 100vw, 2517px" />        </div>
+   362→    </div>
+   363→</div>                                                    <div class="portfolio__item">
+   364→    <div class="portfolio__wrapper">
+   365→        <div class="portfolio__info">
+   366→            <div class="portfolio__case"><span>Автоматизация технологических процессов </span>Machinery Modification</div>
+   367→            <div class="portfolio__item-title">
+   368→                Модернизация плоскошлифовальных станков            </div>
+   369→            <div class="portfolio__exerpt">
+   370→                                                                                                            </div>
+   371→            <a href="https://dvkran.ru/project/modernizacziya-ploskoshlifovalnyh-stankov/" class="button-transparent portfolio__button">Подробнее</a>
+   372→        </div>
+   373→        <div class="portfolio__image">
+   374→            <img width="871" height="581" src="https://dvkran.ru/wp-content/uploads/2019/12/image-6.jpg" class="attachment-full size-full wp-post-image" alt="" srcset="https://dvkran.ru/wp-content/uploads/2019/12/image-6.jpg 871w, https://dvkran.ru/wp-content/uploads/2019/12/image-6-300x200.jpg 300w, https://dvkran.ru/wp-content/uploads/2019/12/image-6-768x512.jpg 768w" sizes="(max-width: 871px) 100vw, 871px" />        </div>
+   375→    </div>
+   376→</div>                                                    <div class="portfolio__item">
+   377→    <div class="portfolio__wrapper">
+   378→        <div class="portfolio__info">
+   379→            <div class="portfolio__case"><span>Автоматизация технологических процессов </span>Machinery Modification</div>
+   380→            <div class="portfolio__item-title">
+   381→                Модернизация гидпропрессового оборудования для изготовления прессованного кирпича            </div>
+   382→            <div class="portfolio__exerpt">
+   383→                                                                                                            </div>
+   384→            <a href="https://dvkran.ru/project/modernizacziya-gidpropressovogo-oborudovaniya-dlya-izgotovleniya-pressovannogo-kirpicha/" class="button-transparent portfolio__button">Подробнее</a>
+   385→        </div>
+   386→        <div class="portfolio__image">
+   387→            <img width="2560" height="1714" src="https://dvkran.ru/wp-content/uploads/2019/12/pressed-bricks-production-line-2-scaled.jpg" class="attachment-full size-full wp-post-image" alt="" srcset="https://dvkran.ru/wp-content/uploads/2019/12/pressed-bricks-production-line-2-scaled.jpg 2560w, https://dvkran.ru/wp-content/uploads/2019/12/pressed-bricks-production-line-2-300x201.jpg 300w, https://dvkran.ru/wp-content/uploads/2019/12/pressed-bricks-production-line-2-1024x685.jpg 1024w, https://dvkran.ru/wp-content/uploads/2019/12/pressed-bricks-production-line-2-768x514.jpg 768w, https://dvkran.ru/wp-content/uploads/2019/12/pressed-bricks-production-line-2-1536x1028.jpg 1536w, https://dvkran.ru/wp-content/uploads/2019/12/pressed-bricks-production-line-2-2048x1371.jpg 2048w" sizes="(max-width: 2560px) 100vw, 2560px" />        </div>
+   388→    </div>
+   389→</div>                                            </div>
+   390→                </div>
+   391→            </div>
+   392→        </section>
+   393→    
+   394→    <section class="subscribe-section hidden-tablet">
+   395→  <div class="container">
+   396→        <div class="subscribe">
+   397→          <div class="title subscribe__title">Остались вопросы?</div>
+   398→          <form class="subscribe__form">
+   399→            <input class="subscribe__name" type="text" name="name" placeholder="Имя">
+   400→            <input class="subscribe__phone" type="text" name="phone" placeholder="Телефон">
