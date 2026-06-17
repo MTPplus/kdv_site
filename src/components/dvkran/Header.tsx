@@ -1,21 +1,24 @@
 'use client';
 
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { NAV_ITEMS, type PageId } from './data';
+import { NAV_ITEMS, UI, type Lang, type PageId } from './data';
 
 interface HeaderProps {
   current: PageId;
+  lang: Lang;
   onNavigate: (page: PageId) => void;
+  onLangChange: (lang: Lang) => void;
 }
 
-export function Header({ current, onNavigate }: HeaderProps) {
+export function Header({ current, lang, onNavigate, onLangChange }: HeaderProps) {
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [lang, setLang] = useState<'ru' | 'en'>('ru');
 
   // Refs to each menu link + the snake indicator element
   const linkRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
   const snakeRef = useRef<HTMLDivElement | null>(null);
   const headerRef = useRef<HTMLElement | null>(null);
+
+  const t = UI[lang];
 
   // Lock body scroll when mobile menu is open
   useEffect(() => {
@@ -58,14 +61,14 @@ export function Header({ current, onNavigate }: HeaderProps) {
 
   useLayoutEffect(() => {
     positionSnake();
-  }, [current]);
+  }, [current, lang]);
 
   // Recompute on resize (only repositions if there's an active item)
   useEffect(() => {
     const handleResize = () => positionSnake();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, [current]);
+  }, [current, lang]);
 
   const handleNav = (page: PageId) => {
     onNavigate(page);
@@ -92,7 +95,7 @@ export function Header({ current, onNavigate }: HeaderProps) {
         <div className="dv-header__wrapper">
           <button
             className={`dv-menu-toggle${mobileOpen ? ' active' : ''}`}
-            aria-label="Открыть меню"
+            aria-label={t.menuOpen}
             onClick={() => setMobileOpen((v) => !v)}
           >
             <span></span>
@@ -107,7 +110,7 @@ export function Header({ current, onNavigate }: HeaderProps) {
               e.preventDefault();
               handleHome();
             }}
-            aria-label="КРАН-ДВ — на главную"
+            aria-label={t.backToHome}
           ></a>
 
           <nav className={`dv-menu${mobileOpen ? ' open' : ''}`}>
@@ -127,7 +130,7 @@ export function Header({ current, onNavigate }: HeaderProps) {
                       handleNav(item.id);
                     }}
                   >
-                    {item.label}
+                    {item.label[lang]}
                   </a>
                 </li>
               ))}
@@ -138,7 +141,7 @@ export function Header({ current, onNavigate }: HeaderProps) {
                 className={`dv-lang__item${lang === 'ru' ? ' active' : ''}`}
                 onClick={(e) => {
                   e.preventDefault();
-                  setLang('ru');
+                  onLangChange('ru');
                 }}
               >
                 ru
@@ -148,7 +151,7 @@ export function Header({ current, onNavigate }: HeaderProps) {
                 className={`dv-lang__item${lang === 'en' ? ' active' : ''}`}
                 onClick={(e) => {
                   e.preventDefault();
-                  setLang('en');
+                  onLangChange('en');
                 }}
               >
                 en

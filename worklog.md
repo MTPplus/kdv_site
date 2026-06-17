@@ -147,3 +147,47 @@ Work Log:
 
 Stage Summary:
 - Snake behavior now: (1) hidden on home page, (2) jumps only on click, (3) doesn't track cursor, (4) fades out smoothly (0.45s) when returning to home page.
+
+---
+Task ID: 17
+Agent: main
+Task: Implement full RU/EN bilingual support — EN button now switches the entire site to English.
+
+Work Log:
+- Restructured data.ts into bilingual format: every string now lives as { ru: "...", en: "..." }.
+- Added Lang type, UI dictionary (brandTitle, home, learnMore, more, downloadReference, menuOpen, backToHome, backToTop, haveQuestions, namePlaceholder, phonePlaceholder, submitRequest, privacyNote, successTitle, successText, ok, heroTitle, heroDescription, productsTitle, engineeringServicesTitle, ourProjectsTitle, responsibleSupplier, ourClients, footerText, copyright, phone/address/email fields).
+- Translated ALL site content to English:
+  * Nav: About / Services / Projects / Contacts
+  * Hero: "Manufacturing of lifting cranes" + description + "Learn more"
+  * Key products: "Gantry cranes / Bridge cranes / Jib cranes / Crane cabins / Chair-consoles / Control rooms / Auxiliary equipment"
+  * Engineering services: "Design of lifting and transport equipment / Maintenance / Crane modernization / Installation / Delivery / Leasing"
+  * Projects: full English titles + technical descriptions (capacities, spans, operation modes)
+  * Provider block: 3 paragraphs about Far East / Khabarovsk
+  * About page: 3 main paragraphs + 11 industries + 8 mt-today tiles + certificates title
+  * Services page: 8 service titles + "Download reference list"
+  * Projects page: filter label/options + 4 portfolio items
+  * Contacts: "Head office:" + address translation + "Tel.:" / "E-mail:" labels
+  * Subscribe form: "Still have questions? / Name / Phone / Submit request / privacy note"
+  * Success modal: "Your request has been sent successfully! / Our manager will contact you shortly. / OK"
+  * Footer: footerText + copyright + address
+- Updated components to accept lang prop: Header, Footer, HomePage, AboutPage, ServicesPage, ProjectsPage, ContactsPage, SubscribeForm, SuccessModal.
+- Header.tsx: removed internal lang state, now receives lang + onLangChange from parent. Lang buttons call onLangChange('ru' | 'en').
+- page.tsx: added lang state with localStorage persistence (key 'dvkran-lang'). On mount, reads saved lang; on change, writes to localStorage + updates document.documentElement.lang + document.title.
+- Snake indicator now re-positions on lang change (useLayoutEffect depends on [current, lang]) so menu item widths still match after label text changes.
+- Deleted unused ProductsPage, VacancyPage, NewsPage components.
+- Verified via agent-browser:
+  * RU mode: all content in Russian (Краны козловые, Узнать подробнее, etc.)
+  * Click EN: site instantly switches — "Learn more", "Gantry cranes", "Auxiliary equipment", "Our projects", "Responsible supplier", "Our clients", "Still have questions?", "Submit request", "All rights reserved.", "Back to top"
+  * About page EN: full company description, industries list, MICROTERM PLUS today tiles, certificates section
+  * Services page EN: all 8 service titles in English
+  * Projects page EN: filter labels + 4 portfolio items translated
+  * Contacts page EN: "Head office:", translated address, "Tel.:"/"E-mail:" labels
+  * Success modal EN: "Your request has been sent successfully!" / "Our manager will contact you shortly." / "OK"
+  * Switch back to RU: all content returns to Russian
+  * Reload page: language persists from localStorage (verified localStorage.getItem returns "en" after reload)
+- Lint: 0 errors.
+
+Stage Summary:
+- EN button now fully functional — switches entire site to English (header, footer, all 5 pages, subscribe form, success modal).
+- Language persists across page refreshes via localStorage.
+- Document title and <html lang> attribute also update dynamically.

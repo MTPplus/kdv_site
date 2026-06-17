@@ -1,13 +1,16 @@
 'use client';
 
 import { useState } from 'react';
+import { UI, type Lang } from './data';
 
 interface SuccessModalProps {
   open: boolean;
   onClose: () => void;
+  lang: Lang;
 }
 
-export function SuccessModal({ open, onClose }: SuccessModalProps) {
+export function SuccessModal({ open, onClose, lang }: SuccessModalProps) {
+  const t = UI[lang];
   if (!open) return null;
   return (
     <div className={`dv-success-window${open ? ' open' : ''}`}>
@@ -16,16 +19,14 @@ export function SuccessModal({ open, onClose }: SuccessModalProps) {
         <button
           className="dv-success-window__close-button"
           onClick={onClose}
-          aria-label="Закрыть"
+          aria-label="Close"
         >
           ×
         </button>
-        <div className="dv-success-window__title">Ваша заявка успешно отправлена!</div>
-        <div className="dv-success-window__text">
-          Наш менеджер свяжется с Вами в ближайшее время.
-        </div>
+        <div className="dv-success-window__title">{t.successTitle}</div>
+        <div className="dv-success-window__text">{t.successText}</div>
         <button className="dv-button" onClick={onClose}>
-          Ок
+          {t.ok}
         </button>
       </div>
     </div>
@@ -33,10 +34,12 @@ export function SuccessModal({ open, onClose }: SuccessModalProps) {
 }
 
 interface SubscribeFormProps {
+  lang: Lang;
   compact?: boolean;
 }
 
-export function SubscribeForm({ compact = false }: SubscribeFormProps) {
+export function SubscribeForm({ lang, compact = false }: SubscribeFormProps) {
+  const t = UI[lang];
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
   const [success, setSuccess] = useState(false);
@@ -54,13 +57,13 @@ export function SubscribeForm({ compact = false }: SubscribeFormProps) {
       <section className="dv-subscribe-section" style={compact ? { marginBottom: 40 } : undefined}>
         <div className="dv-container">
           <div className="dv-subscribe">
-            <div className="dv-subscribe__title">Остались вопросы?</div>
+            <div className="dv-subscribe__title">{t.haveQuestions}</div>
             <form className="dv-subscribe__form" onSubmit={handleSubmit}>
               <input
                 className="dv-subscribe__name"
                 type="text"
                 name="name"
-                placeholder="Имя"
+                placeholder={t.namePlaceholder}
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
@@ -69,7 +72,7 @@ export function SubscribeForm({ compact = false }: SubscribeFormProps) {
                 className="dv-subscribe__phone"
                 type="tel"
                 name="phone"
-                placeholder="Телефон"
+                placeholder={t.phonePlaceholder}
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 required
@@ -77,17 +80,14 @@ export function SubscribeForm({ compact = false }: SubscribeFormProps) {
               <input
                 className="dv-button dv-subscribe__button"
                 type="submit"
-                value="Оставить заявку"
+                value={t.submitRequest}
               />
             </form>
-            <div className="dv-subscribe__note">
-              Нажимая кнопку, вы подтверждаете, что ознакомились и согласны с политикой
-              конфиденциальности
-            </div>
+            <div className="dv-subscribe__note">{t.privacyNote}</div>
           </div>
         </div>
       </section>
-      <SuccessModal open={success} onClose={() => setSuccess(false)} />
+      <SuccessModal open={success} onClose={() => setSuccess(false)} lang={lang} />
     </>
   );
 }

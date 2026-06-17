@@ -2,22 +2,25 @@
 
 import { useState } from 'react';
 import {
-  HERO,
   KEY_PRODUCTS,
   HOME_SERVICES,
   HOME_PROJECTS,
   PROVIDER,
   CLIENTS,
+  UI,
   siteConfig,
+  type Lang,
   type PageId,
 } from './data';
 import { SubscribeForm } from './SubscribeForm';
 
 interface HomePageProps {
+  lang: Lang;
   onNavigate: (page: PageId) => void;
 }
 
-export function HomePage({ onNavigate }: HomePageProps) {
+export function HomePage({ lang, onNavigate }: HomePageProps) {
+  const t = UI[lang];
   const [activeProduct, setActiveProduct] = useState(0);
 
   return (
@@ -26,17 +29,17 @@ export function HomePage({ onNavigate }: HomePageProps) {
       <section className="dv-face-section">
         <div className="dv-container dv-face-banner">
           <div className="dv-face-block">
-            <div className="dv-face-block__title">{HERO.title}</div>
-            <div className="dv-face-block__description">{HERO.description}</div>
+            <div className="dv-face-block__title">{t.heroTitle}</div>
+            <div className="dv-face-block__description">{t.heroDescription}</div>
             <a
               className="dv-button"
               href="/service"
               onClick={(e) => {
                 e.preventDefault();
-                onNavigate(HERO.ctaHref);
+                onNavigate('service');
               }}
             >
-              {HERO.ctaLabel}
+              {t.learnMore}
             </a>
           </div>
         </div>
@@ -46,13 +49,13 @@ export function HomePage({ onNavigate }: HomePageProps) {
       <section className="dv-key-products-section">
         <div className="dv-container">
           <div className="dv-key-products">
-            <div className="dv-key-products__title">Продукция</div>
+            <div className="dv-key-products__title">{t.productsTitle}</div>
             <div className="dv-key-products__view">
               <div className="dv-key-products__viewer">
                 <img
                   className="key-products__image"
                   src={KEY_PRODUCTS[activeProduct].image}
-                  alt={KEY_PRODUCTS[activeProduct].type}
+                  alt={KEY_PRODUCTS[activeProduct].type[lang]}
                 />
               </div>
               <div className="dv-key-products__list">
@@ -67,7 +70,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
                     }}
                     onMouseEnter={() => setActiveProduct(idx)}
                   >
-                    <div className="key-products__type">{p.type}</div>
+                    <div className="key-products__type">{p.type[lang]}</div>
                   </a>
                 ))}
               </div>
@@ -81,7 +84,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
         <div className="dv-container">
           <div className="dv-services">
             <div className="dv-section-title dv-services__title">
-              Инжиниринговые услуги
+              {t.engineeringServicesTitle}
             </div>
             <div className="dv-services__list">
               {HOME_SERVICES.map((s, idx) => (
@@ -95,10 +98,10 @@ export function HomePage({ onNavigate }: HomePageProps) {
                   }}
                 >
                   <div className="single-element__image">
-                    <img src={s.image} alt={s.title} />
+                    <img src={s.image} alt={s.title[lang]} />
                   </div>
-                  <div className="dv-single-element__title">{s.title}</div>
-                  <div className="dv-button-transparent">Подробнее</div>
+                  <div className="dv-single-element__title">{s.title[lang]}</div>
+                  <div className="dv-button-transparent">{t.more}</div>
                 </a>
               ))}
             </div>
@@ -109,7 +112,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
       {/* Our projects preview */}
       <section className="dv-projects-section">
         <div className="dv-container">
-          <div className="dv-project__header-tittle">Наши проекты</div>
+          <div className="dv-project__header-tittle">{t.ourProjectsTitle}</div>
           <div className="dv-project__list">
             {HOME_PROJECTS.map((p, idx) => (
               <a
@@ -121,10 +124,10 @@ export function HomePage({ onNavigate }: HomePageProps) {
                   onNavigate('project');
                 }}
               >
-                <img className="dv-project__img" src={p.image} alt={p.title} />
+                <img className="dv-project__img" src={p.image} alt={p.title[lang]} />
                 <div className="dv-project__text-area">
-                  <div className="dv-project__tittle">{p.title}</div>
-                  <div className="dv-project__text">{p.text}</div>
+                  <div className="dv-project__tittle">{p.title[lang]}</div>
+                  <div className="dv-project__text">{p.text[lang]}</div>
                 </div>
               </a>
             ))}
@@ -136,7 +139,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Скачать референс лист
+              {t.downloadReference}
             </a>
           </div>
         </div>
@@ -145,9 +148,9 @@ export function HomePage({ onNavigate }: HomePageProps) {
       {/* Provider block */}
       <section className="dv-provider-section">
         <div className="dv-container">
-          <div className="dv-provider__tittle">{PROVIDER.title}</div>
+          <div className="dv-provider__tittle">{PROVIDER.title[lang]}</div>
           <div className="dv-provider__text">
-            {PROVIDER.paragraphs.map((p, idx) => (
+            {PROVIDER.paragraphs[lang].map((p, idx) => (
               <p key={idx}>{p}</p>
             ))}
           </div>
@@ -157,18 +160,18 @@ export function HomePage({ onNavigate }: HomePageProps) {
       {/* Clients */}
       <section className="dv-clients-section">
         <div className="dv-container">
-          <div className="dv-clients__tittle">Наши клиенты</div>
+          <div className="dv-clients__tittle">{t.ourClients}</div>
           <div className="dv-clients__wrapper">
             {CLIENTS.map((c, idx) => (
               <div className="dv-client" key={idx}>
-                <img src={c} alt={`Клиент ${idx + 1}`} />
+                <img src={c} alt={`Client ${idx + 1}`} />
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <SubscribeForm />
+      <SubscribeForm lang={lang} />
     </>
   );
 }

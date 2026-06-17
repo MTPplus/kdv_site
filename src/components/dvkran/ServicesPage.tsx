@@ -1,25 +1,30 @@
 'use client';
 
-import { SERVICES, siteConfig } from './data';
+import { SERVICES, UI, type Lang } from './data';
 
-export function ServicesPage() {
+interface ServicesPageProps {
+  lang: Lang;
+}
+
+export function ServicesPage({ lang }: ServicesPageProps) {
+  const t = UI[lang];
   return (
     <div className="dv-container" style={{ paddingTop: 30, paddingBottom: 80 }}>
-      <div className="dv-page__title">{SERVICES.title}</div>
+      <div className="dv-page__title">{SERVICES.title[lang]}</div>
       <div className="dv-services">
         <div className="dv-services-tile">
           {SERVICES.items.map((item, idx) => (
             <div key={idx} className="dv-services__item single-element">
               <div className="single-element__image">
-                <img src={item.image} alt={item.title} />
+                <img src={item.image} alt={item.title[lang]} />
               </div>
-              <div className="dv-single-element__title">{item.title}</div>
+              <div className="dv-single-element__title">{item.title[lang]}</div>
               <a
                 href="#"
                 className="dv-button-transparent"
                 onClick={(e) => e.preventDefault()}
               >
-                Подробнее
+                {t.more}
               </a>
             </div>
           ))}
@@ -32,7 +37,7 @@ export function ServicesPage() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Cкачать референс-лист
+            {t.downloadReferenceShort}
           </a>
         </p>
       </div>

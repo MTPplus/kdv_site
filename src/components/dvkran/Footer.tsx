@@ -1,12 +1,15 @@
 'use client';
 
-import { siteConfig, type PageId } from './data';
+import { UI, type Lang, type PageId } from './data';
 
 interface FooterProps {
+  lang: Lang;
   onNavigate: (page: PageId) => void;
 }
 
-export function Footer({ onNavigate }: FooterProps) {
+export function Footer({ lang, onNavigate }: FooterProps) {
+  const t = UI[lang];
+
   const goHome = (e: React.MouseEvent) => {
     e.preventDefault();
     onNavigate('home');
@@ -25,27 +28,24 @@ export function Footer({ onNavigate }: FooterProps) {
               className="dv-footer__logo"
               href="/"
               onClick={goHome}
-              aria-label="КРАН-ДВ — на главную"
+              aria-label={t.backToHome}
             ></a>
-            <div className="dv-footer__text">
-              Компания «КРАН-ДВ» имеет производственные и инжиниринговые мощности
-              для выполнения крановых проектов различного уровня сложности
-            </div>
+            <div className="dv-footer__text">{t.footerText}</div>
           </div>
           <div className="dv-footer__right">
             <nav className="dv-footer__contacts">
               <div className="dv-contacts__item">
                 <a
                   className="dv-contacts__number"
-                  href={`tel:${siteConfig.phoneHref}`}
+                  href={`tel:${t.phoneHref}`}
                   style={{ color: '#fff', textDecoration: 'none' }}
                 >
-                  {siteConfig.phone}
+                  {t.phone}
                 </a>
               </div>
               <div className="dv-contacts__item">
-                <a className="dv-contacts__email" href={`mailto:${siteConfig.email}`}>
-                  {siteConfig.email}
+                <a className="dv-contacts__email" href={`mailto:${t.email}`}>
+                  {t.email}
                 </a>
               </div>
               <div className="dv-contacts__item">
@@ -55,14 +55,14 @@ export function Footer({ onNavigate }: FooterProps) {
                   onClick={goContacts}
                   style={{ color: '#fff', textDecoration: 'none' }}
                 >
-                  {siteConfig.addressFooter}
+                  {t.addressFooter}
                 </a>
               </div>
             </nav>
           </div>
         </div>
         <div className="dv-footer__copyright">
-          <div className="dv-copyright__text">{siteConfig.copyright}</div>
+          <div className="dv-copyright__text">{t.copyright}</div>
           <div className="dv-social">
             <a
               className="dv-social__item"

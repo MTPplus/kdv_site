@@ -1,15 +1,20 @@
 'use client';
 
-import { PROJECTS } from './data';
+import { PROJECTS, UI, type Lang } from './data';
 import { SubscribeForm } from './SubscribeForm';
 
-export function ProjectsPage() {
+interface ProjectsPageProps {
+  lang: Lang;
+}
+
+export function ProjectsPage({ lang }: ProjectsPageProps) {
+  const t = UI[lang];
   return (
     <>
       <div className="dv-container" style={{ paddingTop: 30, paddingBottom: 80 }}>
-        <div className="dv-page__title">{PROJECTS.title}</div>
+        <div className="dv-page__title">{PROJECTS.title[lang]}</div>
         <div className="dv-project-filter">
-          <div className="dv-project-filter__label">{PROJECTS.filterLabel}</div>
+          <div className="dv-project-filter__label">{PROJECTS.filterLabel[lang]}</div>
           <select
             className="dv-project-filter__select"
             name="project-filter"
@@ -17,12 +22,12 @@ export function ProjectsPage() {
           >
             {PROJECTS.filterOptions.map((opt) => (
               <option key={opt.value} value={opt.value}>
-                {opt.label}
+                {opt.label[lang]}
               </option>
             ))}
           </select>
           <div className="dv-button dv-project-filter__button">
-            {PROJECTS.filterButton}
+            {PROJECTS.filterButton[lang]}
           </div>
         </div>
 
@@ -34,20 +39,20 @@ export function ProjectsPage() {
                   <div className="dv-portfolio__wrapper">
                     <div className="dv-portfolio__info">
                       <div className="dv-portfolio__case">
-                        <span>{item.case}</span>
+                        <span>{item.case[lang]}</span>
                         {item.caseEn}
                       </div>
-                      <div className="dv-portfolio__item-title">{item.title}</div>
+                      <div className="dv-portfolio__item-title">{item.title[lang]}</div>
                       <a
                         href="#"
                         className="dv-button-transparent dv-portfolio__button"
                         onClick={(e) => e.preventDefault()}
                       >
-                        Подробнее
+                        {t.more}
                       </a>
                     </div>
                     <div className="dv-portfolio__image">
-                      <img src={item.image} alt={item.title} />
+                      <img src={item.image} alt={item.title[lang]} />
                     </div>
                   </div>
                 </div>
@@ -56,7 +61,7 @@ export function ProjectsPage() {
           </div>
         </section>
       </div>
-      <SubscribeForm />
+      <SubscribeForm lang={lang} />
     </>
   );
 }
