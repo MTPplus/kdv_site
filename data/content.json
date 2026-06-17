@@ -89,6 +89,27 @@
         "en": "Auxiliary equipment"
       },
       "image": "/images/dvkran/2023__09__product-8.png"
+    },
+    {
+      "type": {
+        "ru": "",
+        "en": ""
+      },
+      "image": ""
+    },
+    {
+      "type": {
+        "ru": "",
+        "en": ""
+      },
+      "image": ""
+    },
+    {
+      "type": {
+        "ru": "",
+        "en": ""
+      },
+      "image": ""
     }
   ],
   "homeServices": [
@@ -388,7 +409,7 @@
         "ru": "Модернизация систем управления двумя станками поперечной резки гофрокартона.",
         "en": "Modernization of control systems for two corrugated cardboard cross-cutting machines."
       },
-      "image": "/images/dvkran/2019__12__image-10.jpg"
+      "image": "/uploads/capture-png-5de0d52b4869.png"
     },
     {
       "case": {
@@ -412,19 +433,7 @@
         "ru": "Модернизация плоскошлифовальных станков",
         "en": "Modernization of surface grinding machines"
       },
-      "image": "/images/dvkran/2019__12__image-6.jpg"
-    },
-    {
-      "case": {
-        "ru": "Автоматизация технологических процессов",
-        "en": "Automation of technological processes"
-      },
-      "caseEn": "Machinery Modification",
-      "title": {
-        "ru": "Модернизация гидпропрессового оборудования для изготовления прессованного кирпича",
-        "en": "Modernization of hydraulic press equipment for the production of pressed bricks"
-      },
-      "image": "/images/dvkran/2019__12__pressed-bricks-production-line-2-scaled.jpg"
+      "image": "/uploads/test-upload-94c80565a721.png"
     }
   ]
 }

@@ -1,7 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import type { ContentData, Bilingual } from '@/lib/content-store';
+import { MediaPicker } from './MediaPicker';
 
 const ADMIN_TOKEN_KEY = 'dvkran-admin-token';
 const DEFAULT_TOKEN = 'admin';
@@ -10,12 +11,27 @@ interface AdminPageProps {
   onExit: () => void;
 }
 
+interface MediaPickerTarget {
+  field: string; // unique key like "products.3.image"
+  value: string;
+}
+
 export function AdminPage({ onExit }: AdminPageProps) {
   const [token, setToken] = useState<string>('');
   const [authed, setAuthed] = useState(false);
   const [data, setData] = useState<ContentData | null>(null);
   const [loading, setLoading] = useState(false);
   const [msg, setMsg] = useState<{ type: 'ok' | 'error'; text: string } | null>(null);
+  const [mediaPickerTarget, setMediaPickerTarget] = useState<MediaPickerTarget | null>(null);
+
+  // Stable IDs for ordered lists (so React doesn't remount inputs on add/remove)
+  const idMapRef = useRef<Record<string, string[]>>({});
+  const nextIdRef = useRef(0);
+
+  const makeId = () => {
+    nextIdRef.current += 1;
+    return `item-${nextIdRef.current}-${Date.now()}`;
+  };
 
   // Restore token from storage on mount
   useEffect(() => {
@@ -33,8 +49,20 @@ export function AdminPage({ onExit }: AdminPageProps) {
     fetch('/api/content', { cache: 'no-store' })
       .then((r) => r.json())
       .then((j) => {
-        if (j.ok) setData(j.data);
-        else setMsg({ type: 'error', text: j.error || 'Load failed' });
+        if (j.ok) {
+          setData(j.data);
+          // Initialize stable IDs for each list
+          const init = (arr: unknown[]) => arr.map(() => makeId());
+          idMapRef.current = {
+            products: init(j.data.products),
+            homeServices: init(j.data.homeServices),
+            homeProjects: init(j.data.homeProjects),
+            serviceItems: init(j.data.serviceItems),
+            projectItems: init(j.data.projectItems),
+          };
+        } else {
+          setMsg({ type: 'error', text: j.error || 'Load failed' });
+        }
       })
       .catch((e) => setMsg({ type: 'error', text: String(e) }))
       .finally(() => setLoading(false));
@@ -134,6 +162,67 @@ export function AdminPage({ onExit }: AdminPageProps) {
       const next = JSON.parse(JSON.stringify(prev)) as ContentData;
       mutator(next);
       return next;
+    });
+  };
+
+  // Open media picker for a specific target
+  const openMediaPicker = (field: string, currentValue: string) => {
+    setMediaPickerTarget({ field, value: currentValue });
+  };
+
+  // Apply selected media URL to the target field
+  const applyMedia = (url: string) => {
+    if (!mediaPickerTarget) return;
+    const field = mediaPickerTarget.field;
+    update((d) => {
+      const parts = field.split('.');
+      const listKey = parts[0];
+      const idx = parseInt(parts[1], 10);
+      const prop = parts[2];
+      const list = (d as any)[listKey];
+      if (Array.isArray(list) && list[idx]) {
+        list[idx][prop] = url;
+      }
+    });
+    setMsg({ type: 'ok', text: `Изображение выбрано: ${url}` });
+    setTimeout(() => setMsg(null), 3000);
+  };
+
+  // ---------- List helpers with stable IDs ----------
+  const addToList = (listKey: 'products' | 'homeServices' | 'homeProjects' | 'serviceItems' | 'projectItems') => {
+    const id = makeId();
+    idMapRef.current[listKey] = [...(idMapRef.current[listKey] || []), id];
+    update((d) => {
+      const list = (d as any)[listKey] as any[];
+      if (listKey === 'products') {
+        list.push({ type: { ru: '', en: '' }, image: '' });
+      } else if (listKey === 'homeServices') {
+        list.push({ title: { ru: '', en: '' }, image: '' });
+      } else if (listKey === 'homeProjects') {
+        list.push({ title: { ru: '', en: '' }, text: { ru: '', en: '' }, image: '' });
+      } else if (listKey === 'serviceItems') {
+        list.push({ title: { ru: '', en: '' }, image: '' });
+      } else if (listKey === 'projectItems') {
+        list.push({
+          case: { ru: '', en: '' },
+          caseEn: '',
+          title: { ru: '', en: '' },
+          image: '',
+        });
+      }
+    });
+    // Auto-scroll to the new item shortly after render
+    setTimeout(() => {
+      const el = document.querySelector(`[data-item-id="${id}"]`);
+      el?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 50);
+  };
+
+  const removeFromList = (listKey: 'products' | 'homeServices' | 'homeProjects' | 'serviceItems' | 'projectItems', idx: number) => {
+    idMapRef.current[listKey] = (idMapRef.current[listKey] || []).filter((_, i) => i !== idx);
+    update((d) => {
+      const list = (d as any)[listKey] as any[];
+      list.splice(idx, 1);
     });
   };
 
@@ -255,27 +344,32 @@ export function AdminPage({ onExit }: AdminPageProps) {
 
         {/* Products */}
         <AdminCard title={`Продукция (${data.products.length})`}>
-          {data.products.map((p, i) => (
-            <ItemRow key={i} index={i} onRemove={() => update((d) => { d.products.splice(i, 1); })}>
-              <BilingualField
-                label="Название"
-                value={p.type}
-                onChange={(v) => update((d) => { d.products[i].type = v; })}
-              />
-              <Field label="Путь к картинке">
-                <input
-                  className="dv-admin-input"
-                  value={p.image}
-                  onChange={(e) => update((d) => { d.products[i].image = e.target.value; })}
+          {data.products.map((p, i) => {
+            const id = idMapRef.current.products?.[i] || `legacy-${i}`;
+            return (
+              <ItemRow
+                key={id}
+                dataItemId={id}
+                index={i}
+                onRemove={() => removeFromList('products', i)}
+              >
+                <BilingualField
+                  label="Название"
+                  value={p.type}
+                  onChange={(v) => update((d) => { d.products[i].type = v; })}
                 />
-              </Field>
-            </ItemRow>
-          ))}
+                <ImageField
+                  label="Изображение"
+                  value={p.image}
+                  onChange={(v) => update((d) => { d.products[i].image = v; })}
+                  onPick={() => openMediaPicker(`products.${i}.image`, p.image)}
+                />
+              </ItemRow>
+            );
+          })}
           <button
-            className="dv-admin-btn dv-admin-btn--ghost"
-            onClick={() => update((d) => {
-              d.products.push({ type: { ru: '', en: '' }, image: '' });
-            })}
+            className="dv-admin-btn dv-admin-btn--ghost dv-admin-btn--add"
+            onClick={() => addToList('products')}
           >
             + Добавить продукт
           </button>
@@ -283,27 +377,32 @@ export function AdminPage({ onExit }: AdminPageProps) {
 
         {/* Home services */}
         <AdminCard title={`Услуги на главной (${data.homeServices.length})`}>
-          {data.homeServices.map((s, i) => (
-            <ItemRow key={i} index={i} onRemove={() => update((d) => { d.homeServices.splice(i, 1); })}>
-              <BilingualField
-                label="Название"
-                value={s.title}
-                onChange={(v) => update((d) => { d.homeServices[i].title = v; })}
-              />
-              <Field label="Путь к картинке">
-                <input
-                  className="dv-admin-input"
-                  value={s.image}
-                  onChange={(e) => update((d) => { d.homeServices[i].image = e.target.value; })}
+          {data.homeServices.map((s, i) => {
+            const id = idMapRef.current.homeServices?.[i] || `legacy-${i}`;
+            return (
+              <ItemRow
+                key={id}
+                dataItemId={id}
+                index={i}
+                onRemove={() => removeFromList('homeServices', i)}
+              >
+                <BilingualField
+                  label="Название"
+                  value={s.title}
+                  onChange={(v) => update((d) => { d.homeServices[i].title = v; })}
                 />
-              </Field>
-            </ItemRow>
-          ))}
+                <ImageField
+                  label="Изображение"
+                  value={s.image}
+                  onChange={(v) => update((d) => { d.homeServices[i].image = v; })}
+                  onPick={() => openMediaPicker(`homeServices.${i}.image`, s.image)}
+                />
+              </ItemRow>
+            );
+          })}
           <button
-            className="dv-admin-btn dv-admin-btn--ghost"
-            onClick={() => update((d) => {
-              d.homeServices.push({ title: { ru: '', en: '' }, image: '' });
-            })}
+            className="dv-admin-btn dv-admin-btn--ghost dv-admin-btn--add"
+            onClick={() => addToList('homeServices')}
           >
             + Добавить услугу
           </button>
@@ -311,33 +410,38 @@ export function AdminPage({ onExit }: AdminPageProps) {
 
         {/* Home projects */}
         <AdminCard title={`Проекты на главной (${data.homeProjects.length})`}>
-          {data.homeProjects.map((p, i) => (
-            <ItemRow key={i} index={i} onRemove={() => update((d) => { d.homeProjects.splice(i, 1); })}>
-              <BilingualField
-                label="Заголовок"
-                value={p.title}
-                onChange={(v) => update((d) => { d.homeProjects[i].title = v; })}
-              />
-              <BilingualField
-                label="Описание"
-                value={p.text}
-                textarea
-                onChange={(v) => update((d) => { d.homeProjects[i].text = v; })}
-              />
-              <Field label="Путь к картинке">
-                <input
-                  className="dv-admin-input"
-                  value={p.image}
-                  onChange={(e) => update((d) => { d.homeProjects[i].image = e.target.value; })}
+          {data.homeProjects.map((p, i) => {
+            const id = idMapRef.current.homeProjects?.[i] || `legacy-${i}`;
+            return (
+              <ItemRow
+                key={id}
+                dataItemId={id}
+                index={i}
+                onRemove={() => removeFromList('homeProjects', i)}
+              >
+                <BilingualField
+                  label="Заголовок"
+                  value={p.title}
+                  onChange={(v) => update((d) => { d.homeProjects[i].title = v; })}
                 />
-              </Field>
-            </ItemRow>
-          ))}
+                <BilingualField
+                  label="Описание"
+                  value={p.text}
+                  textarea
+                  onChange={(v) => update((d) => { d.homeProjects[i].text = v; })}
+                />
+                <ImageField
+                  label="Изображение"
+                  value={p.image}
+                  onChange={(v) => update((d) => { d.homeProjects[i].image = v; })}
+                  onPick={() => openMediaPicker(`homeProjects.${i}.image`, p.image)}
+                />
+              </ItemRow>
+            );
+          })}
           <button
-            className="dv-admin-btn dv-admin-btn--ghost"
-            onClick={() => update((d) => {
-              d.homeProjects.push({ title: { ru: '', en: '' }, text: { ru: '', en: '' }, image: '' });
-            })}
+            className="dv-admin-btn dv-admin-btn--ghost dv-admin-btn--add"
+            onClick={() => addToList('homeProjects')}
           >
             + Добавить проект
           </button>
@@ -420,27 +524,32 @@ export function AdminPage({ onExit }: AdminPageProps) {
 
         {/* Service items (services page) */}
         <AdminCard title={`Услуги (страница) (${data.serviceItems.length})`}>
-          {data.serviceItems.map((s, i) => (
-            <ItemRow key={i} index={i} onRemove={() => update((d) => { d.serviceItems.splice(i, 1); })}>
-              <BilingualField
-                label="Название"
-                value={s.title}
-                onChange={(v) => update((d) => { d.serviceItems[i].title = v; })}
-              />
-              <Field label="Путь к картинке">
-                <input
-                  className="dv-admin-input"
-                  value={s.image}
-                  onChange={(e) => update((d) => { d.serviceItems[i].image = e.target.value; })}
+          {data.serviceItems.map((s, i) => {
+            const id = idMapRef.current.serviceItems?.[i] || `legacy-${i}`;
+            return (
+              <ItemRow
+                key={id}
+                dataItemId={id}
+                index={i}
+                onRemove={() => removeFromList('serviceItems', i)}
+              >
+                <BilingualField
+                  label="Название"
+                  value={s.title}
+                  onChange={(v) => update((d) => { d.serviceItems[i].title = v; })}
                 />
-              </Field>
-            </ItemRow>
-          ))}
+                <ImageField
+                  label="Изображение"
+                  value={s.image}
+                  onChange={(v) => update((d) => { d.serviceItems[i].image = v; })}
+                  onPick={() => openMediaPicker(`serviceItems.${i}.image`, s.image)}
+                />
+              </ItemRow>
+            );
+          })}
           <button
-            className="dv-admin-btn dv-admin-btn--ghost"
-            onClick={() => update((d) => {
-              d.serviceItems.push({ title: { ru: '', en: '' }, image: '' });
-            })}
+            className="dv-admin-btn dv-admin-btn--ghost dv-admin-btn--add"
+            onClick={() => addToList('serviceItems')}
           >
             + Добавить услугу
           </button>
@@ -448,45 +557,45 @@ export function AdminPage({ onExit }: AdminPageProps) {
 
         {/* Project items (projects page) */}
         <AdminCard title={`Проекты (страница) (${data.projectItems.length})`}>
-          {data.projectItems.map((p, i) => (
-            <ItemRow key={i} index={i} onRemove={() => update((d) => { d.projectItems.splice(i, 1); })}>
-              <BilingualField
-                label="Категория"
-                value={p.case}
-                onChange={(v) => update((d) => { d.projectItems[i].case = v; })}
-              />
-              <Field label="Английская подпись категории (Case En)">
-                <input
-                  className="dv-admin-input"
-                  value={p.caseEn}
-                  onChange={(e) => update((d) => { d.projectItems[i].caseEn = e.target.value; })}
+          {data.projectItems.map((p, i) => {
+            const id = idMapRef.current.projectItems?.[i] || `legacy-${i}`;
+            return (
+              <ItemRow
+                key={id}
+                dataItemId={id}
+                index={i}
+                onRemove={() => removeFromList('projectItems', i)}
+              >
+                <BilingualField
+                  label="Категория"
+                  value={p.case}
+                  onChange={(v) => update((d) => { d.projectItems[i].case = v; })}
                 />
-              </Field>
-              <BilingualField
-                label="Заголовок проекта"
-                value={p.title}
-                textarea
-                onChange={(v) => update((d) => { d.projectItems[i].title = v; })}
-              />
-              <Field label="Путь к картинке">
-                <input
-                  className="dv-admin-input"
+                <Field label="Английская подпись категории (Case En)">
+                  <input
+                    className="dv-admin-input"
+                    value={p.caseEn}
+                    onChange={(e) => update((d) => { d.projectItems[i].caseEn = e.target.value; })}
+                  />
+                </Field>
+                <BilingualField
+                  label="Заголовок проекта"
+                  value={p.title}
+                  textarea
+                  onChange={(v) => update((d) => { d.projectItems[i].title = v; })}
+                />
+                <ImageField
+                  label="Изображение"
                   value={p.image}
-                  onChange={(e) => update((d) => { d.projectItems[i].image = e.target.value; })}
+                  onChange={(v) => update((d) => { d.projectItems[i].image = v; })}
+                  onPick={() => openMediaPicker(`projectItems.${i}.image`, p.image)}
                 />
-              </Field>
-            </ItemRow>
-          ))}
+              </ItemRow>
+            );
+          })}
           <button
-            className="dv-admin-btn dv-admin-btn--ghost"
-            onClick={() => update((d) => {
-              d.projectItems.push({
-                case: { ru: '', en: '' },
-                caseEn: '',
-                title: { ru: '', en: '' },
-                image: '',
-              });
-            })}
+            className="dv-admin-btn dv-admin-btn--ghost dv-admin-btn--add"
+            onClick={() => addToList('projectItems')}
           >
             + Добавить проект
           </button>
@@ -494,10 +603,7 @@ export function AdminPage({ onExit }: AdminPageProps) {
       </main>
 
       <footer className="dv-admin__footer">
-        <button
-          onClick={openPreview}
-          className="dv-admin-btn dv-admin-btn--primary"
-        >
+        <button onClick={openPreview} className="dv-admin-btn dv-admin-btn--primary">
           Открыть предпросмотр в новой вкладке ↗
         </button>
         <button
@@ -508,6 +614,14 @@ export function AdminPage({ onExit }: AdminPageProps) {
           {loading ? 'Сохранение...' : 'Сохранить изменения'}
         </button>
       </footer>
+
+      {/* Media picker modal */}
+      <MediaPicker
+        open={mediaPickerTarget !== null}
+        onClose={() => setMediaPickerTarget(null)}
+        onSelect={applyMedia}
+        adminToken={token}
+      />
     </div>
   );
 }
@@ -603,21 +717,12 @@ function BilingualListField({
       <div className="dv-admin-bilingual">
         <label className="dv-admin-bilingual__col">
           <span className="dv-admin-bilingual__tag">RU</span>
-          {textarea ? (
-            <textarea
-              className="dv-admin-input"
-              rows={Math.max(3, value.ru.length)}
-              value={value.ru.join('\n')}
-              onChange={(e) => onChange({ ...value, ru: e.target.value.split('\n') })}
-            />
-          ) : (
-            <textarea
-              className="dv-admin-input"
-              rows={Math.max(3, value.ru.length)}
-              value={value.ru.join('\n')}
-              onChange={(e) => onChange({ ...value, ru: e.target.value.split('\n') })}
-            />
-          )}
+          <textarea
+            className="dv-admin-input"
+            rows={Math.max(3, value.ru.length)}
+            value={value.ru.join('\n')}
+            onChange={(e) => onChange({ ...value, ru: e.target.value.split('\n') })}
+          />
         </label>
         <label className="dv-admin-bilingual__col">
           <span className="dv-admin-bilingual__tag">EN</span>
@@ -634,17 +739,61 @@ function BilingualListField({
   );
 }
 
+function ImageField({
+  label,
+  value,
+  onChange,
+  onPick,
+}: {
+  label: string;
+  value: string;
+  onChange: (v: string) => void;
+  onPick: () => void;
+}) {
+  return (
+    <div className="dv-admin-field">
+      <span className="dv-admin-field__label">{label}</span>
+      <div className="dv-admin-image-field">
+        <div className="dv-admin-image-field__preview">
+          {value ? (
+            <img src={value} alt="" />
+          ) : (
+            <div className="dv-admin-image-field__empty">Нет изображения</div>
+          )}
+        </div>
+        <div className="dv-admin-image-field__controls">
+          <input
+            className="dv-admin-input"
+            value={value}
+            onChange={(e) => onChange(e.target.value)}
+            placeholder="/images/dvkran/... или /uploads/..."
+          />
+          <button
+            type="button"
+            className="dv-admin-btn dv-admin-btn--primary"
+            onClick={onPick}
+          >
+            📁 Выбрать файл
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function ItemRow({
   index,
   onRemove,
   children,
+  dataItemId,
 }: {
   index: number;
   onRemove: () => void;
   children: React.ReactNode;
+  dataItemId?: string;
 }) {
   return (
-    <div className="dv-admin-item">
+    <div className="dv-admin-item" data-item-id={dataItemId}>
       <div className="dv-admin-item__header">
         <span className="dv-admin-item__num">#{index + 1}</span>
         <button onClick={onRemove} className="dv-admin-btn dv-admin-btn--danger">

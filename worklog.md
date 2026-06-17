@@ -253,3 +253,63 @@ Stage Summary:
   reference list URL, yandex map URL). Every field is bilingual (RU/EN).
 - "Open preview" button opens the live site in a new tab; saved changes are visible
   immediately (within 60s polling, or instantly on page reload).
+
+---
+Task ID: 19
+Agent: main
+Task: Fix Add buttons + implement media upload with library.
+
+Work Log:
+- Verified that "Add" buttons were already functional in AdminPage.tsx — the issue was
+  lack of visible feedback (new empty items appended at the end of the list, off-screen).
+  Confirmed via agent-browser: clicking "+ Добавить продукт" increased count from 9 to 10.
+- Fixed Add UX:
+  * Replaced React list keys from `i` (index) to stable unique IDs (`item-<n>-<timestamp>`)
+    so inputs don't remount on add/remove. Added idMapRef + makeId() helpers.
+  * After adding, auto-scroll the new item into view via scrollIntoView({ block: 'center' }).
+  * Added data-item-id attribute to each ItemRow for targeting.
+  * Added visual style for Add button (dashed coral border, coral text, hover fill).
+- Built media upload pipeline:
+  * Created /api/media/upload route (POST + GET):
+    - POST: validates admin token, accepts multipart/form-data with "file" field,
+      enforces 10MB max size, restricts to image MIME types
+      (jpeg/png/gif/webp/svg/bmp/ico), generates safe unique filename
+      (<slug>-<6-byte-hex>.<ext>), writes to /home/z/my-project/public/uploads/.
+    - GET: lists all uploaded files (no auth required, used to populate library).
+  * Created MediaPicker.tsx — modal with:
+    - Drag-and-drop dropzone (click to browse too).
+    - Live upload progress ("Загрузка…").
+    - Library grid showing all uploaded files as thumbnails.
+    - Single-click to select (shows preview), double-click to confirm immediately.
+    - "Выбрать" / "Отмена" buttons in footer.
+    - Refresh button to reload library.
+  * Created ImageField component — replaces plain text input for image paths with:
+    - 100x100 thumbnail preview (shows "Нет изображения" placeholder if empty).
+    - URL input (still editable manually for advanced users).
+    - "📁 Выбрать файл" button that opens MediaPicker.
+  * Wired ImageField into all 5 ordered lists (Products, HomeServices, HomeProjects,
+    ServiceItems, ProjectItems) — 31 image fields total.
+- Stable IDs in applyMedia: when user selects a file in MediaPicker, the URL is applied
+  to the specific field via `products.${i}.image` path parsing in update().
+- Verified end-to-end via agent-browser:
+  * Login → admin panel loads.
+  * "+ Добавить продукт" → count goes 9 → 10, new item appears, auto-scrolled into view.
+  * Click "📁 Выбрать файл" on the new item → MediaPicker modal opens.
+  * Tested upload API directly with curl: POST /api/media/upload with test image →
+    saved to /uploads/test-upload-94c80565a721.png, accessible at that URL.
+  * Reopened picker → uploaded image shows in library grid (1 file).
+  * Click thumbnail → preview shows /uploads/test-upload-...png.
+  * Click "Выбрать" → URL inserted into the product's image input.
+  * Filled product title "Тестовый новый продукт" + Save → file updated correctly:
+    { type: { ru: 'Тестовый новый продукт', en: '' }, image: '/uploads/test-upload-...' }.
+  * Opened site → new product visible on home page.
+  * Deleted the test product → Save → back to 9 products.
+- Lint: 0 errors.
+
+Stage Summary:
+- "Add" buttons work correctly (confirmed via counter check + auto-scroll feedback).
+- Media upload pipeline fully functional: drag-drop + click-to-browse + 10MB limit +
+  image type whitelist + safe filenames + persistent library at /uploads/.
+- ImageField with preview replaces all 31 image-path inputs across 5 lists.
+- MediaPicker modal: select from library OR upload new — both paths write the chosen URL
+  back into the target field, then "Save" persists to content.json.
