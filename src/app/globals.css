@@ -234,6 +234,7 @@
   z-index: 50;
   background-color: #fff;
   border-bottom: 1px solid var(--dv-border);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04);
 }
 .dv-header__wrapper {
   padding: 20px 0;
@@ -266,28 +267,38 @@
   font-weight: 500;
   line-height: 1;
   letter-spacing: 0.364px;
+  position: relative;
 }
 .dv-menu__item a {
   color: #171717;
   text-decoration: none;
-  padding: 8px 4px;
+  padding: 22px 4px;
   display: inline-block;
   position: relative;
-  transition: color 0.2s ease;
+  transition: color 0.25s ease;
   cursor: pointer;
 }
-.dv-menu__item a:hover,
-.dv-menu__item.active a {
-  color: var(--dv-brand);
-}
-.dv-menu__item.active a::after {
+.dv-menu__item a::after {
   content: "";
   position: absolute;
   left: 0;
   right: 0;
-  bottom: -4px;
-  height: 2px;
+  bottom: 0;
+  height: 4px;
   background-color: var(--dv-brand);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.dv-menu__item a:hover {
+  color: var(--dv-brand);
+}
+.dv-menu__item a:hover::after,
+.dv-menu__item.active a::after {
+  transform: scaleX(1);
+}
+.dv-menu__item.active a {
+  color: var(--dv-brand);
 }
 
 /* Language switcher */
@@ -383,8 +394,15 @@
     display: block;
     padding: 0;
   }
-  .dv-menu__item.active a::after {
+  .dv-menu__item a::after,
+  .dv-menu__item.active a::after,
+  .dv-menu__item a:hover::after {
     display: none;
+    content: none;
+  }
+  .dv-menu__item.active a {
+    color: var(--dv-brand);
+    background-color: rgba(232, 82, 53, 0.12);
   }
   .dv-lang {
     margin: 20px auto 0;
@@ -506,20 +524,29 @@
 }
 .dv-key-products__item {
   display: block;
-  padding: 22px 16px;
-  font-size: 24px;
-  font-weight: 700;
+  padding: 22px 24px;
+  font-size: 22px;
+  font-weight: 600;
   color: var(--dv-dark);
   text-decoration: none;
+  background-color: #fff;
   border-bottom: 1px solid var(--dv-border);
   cursor: pointer;
-  transition: color 0.2s ease, padding 0.2s ease;
+  transition: background-color 0.25s ease, color 0.25s ease, padding 0.25s ease;
   line-height: 1.3;
+  position: relative;
 }
-.dv-key-products__item:hover,
-.dv-key-products__item.active {
+.dv-key-products__item:hover {
   color: var(--dv-brand);
-  padding-left: 26px;
+  padding-left: 32px;
+}
+.dv-key-products__item.active {
+  background-color: var(--dv-brand);
+  color: #fff;
+  padding-left: 32px;
+}
+.dv-key-products__item.active:hover {
+  color: #fff;
 }
 
 @media (max-width: 1023px) {

@@ -47,3 +47,28 @@ Stage Summary:
 - All 8 source pages (Главная + 7 inner) reproduced with identical text and images.
 - Stack: Next.js 16 + TypeScript + Tailwind 4 (client-side routing within the single `/` route).
 - 87 source images downloaded and served locally from /public/images/dvkran/.
+
+---
+Task ID: 13
+Agent: main
+Task: Fix header issues reported by user (shadow, selection animation, section underlining) using Figma design as reference.
+
+Work Log:
+- Extracted user's Figma zip with 10 PDFs (main, services, portfolio, contacts, career, news, product, production, text + 9 mobile 768px variants) and converted to PNG.
+- Analyzed user's pasted screenshot and Figma main page top section via VLM.
+- Cross-referenced with original dvkran.ru main.min.css to find EXACT source rules:
+  * Source had no header box-shadow (only 1px border-bottom).
+  * Source active menu underline was a 10px coral bar (#e85235) at bottom: -46.5px (a thick bar, not a thin line).
+  * Source had NO transition on the underline (instant appearance).
+- Figma design showed: active product list item has FULL coral background + white text (not just an underline).
+- Applied 3 fixes to globals.css:
+  1. Added box-shadow to .dv-header: `0 6px 24px rgba(0,0,0,0.08), 0 2px 6px rgba(0,0,0,0.04)`.
+  2. Reworked menu underline: pseudo-element `::after` with `transform: scaleX(0)` -> `scaleX(1)` on hover/active, transform-origin: left, 4px thick coral bar, smooth 0.3s cubic-bezier transition.
+  3. Changed products list active item: full coral background (#e85235) + white text + 32px left padding (matching Figma), with smooth color/padding transition.
+- Mobile menu: kept dark theme but tinted active item with coral text + translucent coral background.
+- Verified via agent-browser + VLM: shadow visible, "Продукция" active shows orange underline + text color, products list "Краны козловые" has full coral bg with white text — matches Figma design.
+- Lint: 0 errors.
+
+Stage Summary:
+- 3 user-reported issues fixed: header shadow, selection animation (scaleX slide-in), section underlining (4px thick coral bar).
+- Bonus: products list now uses full coral background for active item per Figma design.
