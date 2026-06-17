@@ -5,11 +5,8 @@ import { Header } from '@/components/dvkran/Header';
 import { Footer } from '@/components/dvkran/Footer';
 import { HomePage } from '@/components/dvkran/HomePage';
 import { AboutPage } from '@/components/dvkran/AboutPage';
-import { ProductsPage } from '@/components/dvkran/ProductsPage';
 import { ServicesPage } from '@/components/dvkran/ServicesPage';
 import { ProjectsPage } from '@/components/dvkran/ProjectsPage';
-import { VacancyPage } from '@/components/dvkran/VacancyPage';
-import { NewsPage } from '@/components/dvkran/NewsPage';
 import { ContactsPage } from '@/components/dvkran/ContactsPage';
 import type { PageId } from '@/components/dvkran/data';
 
@@ -18,32 +15,14 @@ export default function Home() {
   const [page, setPage] = useState<PageId>(() => {
     if (typeof window === 'undefined') return 'home';
     const hash = window.location.hash.replace(/^#/, '');
-    const valid: PageId[] = [
-      'home',
-      'about',
-      'products',
-      'service',
-      'project',
-      'vacancy',
-      'news',
-      'contacts',
-    ];
+    const valid: PageId[] = ['home', 'about', 'service', 'project', 'contacts'];
     return (valid as string[]).includes(hash) ? (hash as PageId) : 'home';
   });
   const [showTop, setShowTop] = useState(false);
 
   // Listen for hash changes (e.g., browser back/forward)
   useEffect(() => {
-    const valid: PageId[] = [
-      'home',
-      'about',
-      'products',
-      'service',
-      'project',
-      'vacancy',
-      'news',
-      'contacts',
-    ];
+    const valid: PageId[] = ['home', 'about', 'service', 'project', 'contacts'];
     const onHash = () => {
       const h = window.location.hash.replace(/^#/, '');
       if ((valid as string[]).includes(h)) {
@@ -84,20 +63,14 @@ export default function Home() {
   };
 
   return (
-    <div
-      className="min-h-screen flex flex-col"
-      style={{ background: '#fff' }}
-    >
+    <div className="min-h-screen flex flex-col" style={{ background: '#fff' }}>
       <Header current={page} onNavigate={handleNavigate} />
 
       <main className="dv-main" style={{ flex: 1, display: 'block' }}>
         {page === 'home' && <HomePage onNavigate={handleNavigate} />}
         {page === 'about' && <AboutPage />}
-        {page === 'products' && <ProductsPage onNavigate={handleNavigate} />}
         {page === 'service' && <ServicesPage />}
         {page === 'project' && <ProjectsPage />}
-        {page === 'vacancy' && <VacancyPage />}
-        {page === 'news' && <NewsPage />}
         {page === 'contacts' && <ContactsPage />}
       </main>
 

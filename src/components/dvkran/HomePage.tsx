@@ -63,7 +63,7 @@ export function HomePage({ onNavigate }: HomePageProps) {
                     href="/"
                     onClick={(e) => {
                       e.preventDefault();
-                      onNavigate('products');
+                      setActiveProduct(idx);
                     }}
                     onMouseEnter={() => setActiveProduct(idx)}
                   >

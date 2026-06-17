@@ -86,11 +86,8 @@ export const siteConfig = {
 
 export const NAV_ITEMS = [
   { id: 'about', label: 'О компании' },
-  { id: 'products', label: 'Продукция' },
   { id: 'service', label: 'Услуги' },
   { id: 'project', label: 'Проекты' },
-  { id: 'vacancy', label: 'Вакансии' },
-  { id: 'news', label: 'Новости' },
   { id: 'contacts', label: 'Контакты' },
 ] as const;
 

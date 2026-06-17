@@ -104,3 +104,23 @@ Work Log:
 Stage Summary:
 - Snake underline implemented: one shared coral bar at the bottom of the header that smoothly slides between menu items on hover, returns to active item on mouse leave. Smooth cubic-bezier 0.35s transition gives the "snake" effect requested.
 - Partner logos enlarged ~75% (max-height 80→140px), wrapped in bordered cards, no longer grayscale, fully readable.
+
+---
+Task ID: 15
+Agent: main
+Task: Delete Products/Vacancy/News pages; fix snake underline so it's pinned to the very bottom of the header.
+
+Work Log:
+- Analyzed user's screenshot via pixel-level inspection (Python+PIL): confirmed coral bar was at y=91 of 148px (61.5% from top), NOT at header bottom — was floating in the middle of the header because bottom:0 was relative to .dv-menu__list (whose bottom != header bottom due to padding 20px on .dv-header__wrapper).
+- Removed "Продукция", "Вакансии", "Новости" from NAV_ITEMS in data.ts (kept: О компании, Услуги, Проекты, Контакты).
+- Removed ProductsPage/VacancyPage/NewsPage imports and routes from page.tsx; updated valid PageId list.
+- Refactored Header.tsx: snake element moved OUT of <ul class="dv-menu__list"> and is now a direct child of <header ref={headerRef}>. Position is computed against header's getBoundingClientRect, not list's.
+- CSS: .dv-menu__snake now uses bottom:0 with header as positioning context (header is position:sticky which establishes containing block). Snake is 4px tall, sits flush with header's bottom edge (verified: header bottom y=110, snake bottom y=109 — 1px diff due to subpixel rounding, visually perfect).
+- Verified via eval: snakeTop=105, snakeBottom=109, headerBottom=110 — at the very bottom of header.
+- VLM confirmed: "находится строго у самого низа хедера (на границе хедера и контентом)".
+- Hover test: hover "Услуги" → snake slides under "Услуги"; hover "Контакты" then mouseleave → snake returns to active "О компании" (snake's smooth cubic-bezier transition works).
+- Lint: 0 errors.
+
+Stage Summary:
+- Menu reduced from 7 to 4 items (removed Продукция, Вакансии, Новости — both from nav and from page routing).
+- Snake underline now correctly pinned to the very bottom edge of the header, slides between menu items on hover with smooth 0.35s cubic-bezier transition.

@@ -15,8 +15,8 @@ export function Header({ current, onNavigate }: HeaderProps) {
 
   // Refs to each menu link + the snake indicator element
   const linkRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
-  const snakeRef = useRef<HTMLLIElement | null>(null);
-  const menuListRef = useRef<HTMLUListElement | null>(null);
+  const snakeRef = useRef<HTMLDivElement | null>(null);
+  const headerRef = useRef<HTMLElement | null>(null);
 
   // Lock body scroll when mobile menu is open
   useEffect(() => {
@@ -30,19 +30,20 @@ export function Header({ current, onNavigate }: HeaderProps) {
     };
   }, [mobileOpen]);
 
-  // Position the snake indicator imperatively — updates DOM directly without setState.
-  // This avoids the "setState in effect" lint error AND gives smoother animation
-  // because we update the same DOM node without re-rendering React.
+  // Position the snake indicator imperatively — pinned to the bottom of the header,
+  // left/width matches the active (or hovered) menu item.
+  // We update DOM directly without setState to avoid the "setState in effect" lint rule
+  // AND to get smoother animation (no React re-render).
   const positionSnake = () => {
     const targetId = hovered ?? current;
     const link = linkRefs.current[targetId];
-    const list = menuListRef.current;
+    const header = headerRef.current;
     const snake = snakeRef.current;
-    if (!link || !list || !snake) return;
+    if (!link || !header || !snake) return;
 
     const linkRect = link.getBoundingClientRect();
-    const listRect = list.getBoundingClientRect();
-    snake.style.left = `${linkRect.left - listRect.left}px`;
+    const headerRect = header.getBoundingClientRect();
+    snake.style.left = `${linkRect.left - headerRect.left}px`;
     snake.style.width = `${linkRect.width}px`;
     snake.style.opacity = '1';
   };
@@ -71,7 +72,16 @@ export function Header({ current, onNavigate }: HeaderProps) {
   };
 
   return (
-    <header className="dv-header">
+    <header ref={headerRef} className="dv-header">
+      {/* Snake indicator: a single coral bar pinned to the very bottom of the header.
+          It slides left/width between menu items with smooth transition.
+          Lives directly inside .dv-header so bottom:0 == bottom of header. */}
+      <div
+        ref={snakeRef}
+        className="dv-menu__snake"
+        aria-hidden="true"
+        style={{ left: '0px', width: '0px', opacity: 0 }}
+      />
       <div className="dv-container">
         <div className="dv-header__wrapper">
           <button
@@ -98,15 +108,7 @@ export function Header({ current, onNavigate }: HeaderProps) {
             className={`dv-menu${mobileOpen ? ' open' : ''}`}
             onMouseLeave={() => setHovered(null)}
           >
-            <ul ref={menuListRef} className="dv-menu__list">
-              {/* Snake indicator: single coral bar attached to bottom of header.
-                  Slides between items with smooth left+width transition. */}
-              <li
-                ref={snakeRef}
-                className="dv-menu__snake"
-                aria-hidden="true"
-                style={{ left: '0px', width: '0px', opacity: 0 }}
-              />
+            <ul className="dv-menu__list">
               {NAV_ITEMS.map((item) => (
                 <li
                   key={item.id}
