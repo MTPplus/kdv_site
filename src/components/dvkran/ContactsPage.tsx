@@ -1,26 +1,35 @@
 'use client';
 
 import { CONTACTS, type Lang } from './data';
+import { getSettings, type DynamicContent } from './content-loader';
 
 interface ContactsPageProps {
   lang: Lang;
+  content: DynamicContent;
 }
 
-export function ContactsPage({ lang }: ContactsPageProps) {
+export function ContactsPage({ lang, content }: ContactsPageProps) {
+  const settings = getSettings(content);
+  const title = content.loaded ? (lang === 'ru' ? 'Контакты' : 'Contacts') : CONTACTS.title[lang];
+  const officeName = content.loaded ? (lang === 'ru' ? 'Головной офис:' : 'Head office:') : CONTACTS.officeName[lang];
+  const phoneLabel = content.loaded ? (lang === 'ru' ? 'Тел.:' : 'Tel.:') : CONTACTS.phoneLabel[lang];
+  const emailLabel = content.loaded ? 'E-mail:' : CONTACTS.emailLabel[lang];
+  const mapTitle = content.loaded ? (lang === 'ru' ? 'Карта — офис КРАН-ДВ' : 'Map — KRAN-DV office') : CONTACTS.mapTitle[lang];
+
   return (
     <div className="dv-container" style={{ paddingTop: 30, paddingBottom: 80 }}>
-      <div className="dv-page__title">{CONTACTS.title[lang]}</div>
+      <div className="dv-page__title">{title}</div>
 
       <section className="dv-contacts-section">
         <div className="dv-contacts">
           <div className="dv-contacts__list">
             <div className="dv-contact">
               <div className="dv-contact__info">
-                <div className="dv-contact__name">{CONTACTS.officeName[lang]}</div>
-                <div className="dv-contact__row">{CONTACTS.officeAddress[lang]}</div>
+                <div className="dv-contact__name">{officeName}</div>
+                <div className="dv-contact__row">{settings.addressOffice[lang]}</div>
                 <div className="dv-contact__row">
-                  {CONTACTS.phoneLabel[lang]}{' '}
-                  {CONTACTS.phones.map((p, idx) => (
+                  {phoneLabel}{' '}
+                  {[settings.phone, settings.phoneAdditional].map((p, idx) => (
                     <span key={idx}>
                       {idx > 0 && ', '}
                       <a className="dv-contact__phone" href={`tel:${p.replace(/[^+\d]/g, '')}`}>
@@ -30,16 +39,16 @@ export function ContactsPage({ lang }: ContactsPageProps) {
                   ))}
                 </div>
                 <div className="dv-contact__row">
-                  {CONTACTS.emailLabel[lang]}{' '}
-                  <a className="dv-contact__email" href={`mailto:${CONTACTS.email}`}>
-                    {CONTACTS.email}
+                  {emailLabel}{' '}
+                  <a className="dv-contact__email" href={`mailto:${settings.emailOffice}`}>
+                    {settings.emailOffice}
                   </a>
                 </div>
               </div>
               <div className="dv-contact__map">
                 <iframe
-                  src={CONTACTS.mapSrc}
-                  title={CONTACTS.mapTitle[lang]}
+                  src={settings.yandexMapSrc}
+                  title={mapTitle}
                   loading="lazy"
                 ></iframe>
               </div>

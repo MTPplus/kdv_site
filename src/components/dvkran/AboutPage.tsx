@@ -1,34 +1,37 @@
 'use client';
 
 import { ABOUT, type Lang } from './data';
+import { getAbout, type DynamicContent } from './content-loader';
 
 interface AboutPageProps {
   lang: Lang;
+  content: DynamicContent;
 }
 
-export function AboutPage({ lang }: AboutPageProps) {
+export function AboutPage({ lang, content }: AboutPageProps) {
+  const about = getAbout(content);
   return (
     <div className="dv-container" style={{ paddingTop: 30, paddingBottom: 80 }}>
-      <div className="dv-page__title">{ABOUT.title[lang]}</div>
+      <div className="dv-page__title">{about.title[lang]}</div>
 
       <section className="dv-single-section">
         <div className="dv-single">
           <div className="dv-word-seo">
             <div className="dv-word-seo__content">
               <div className="dv-word-seo__text">
-                {ABOUT.text[lang].map((p, idx) => (
+                {about.text[lang].map((p, idx) => (
                   <p key={idx} style={{ marginBottom: 16 }}>
                     {p}
                   </p>
                 ))}
               </div>
-              <div className="dv-word-seo__signature">{ABOUT.signature[lang]}</div>
+              <div className="dv-word-seo__signature">{about.signature[lang]}</div>
               <div className="dv-word-seo__photo"></div>
             </div>
           </div>
 
           {/* Industries + geography */}
-          <div className="dv-industry__title">{ABOUT.industryTitle[lang]}</div>
+          <div className="dv-industry__title">{about.industryTitle[lang]}</div>
           <div
             style={{
               display: 'grid',
@@ -39,7 +42,7 @@ export function AboutPage({ lang }: AboutPageProps) {
           >
             <div className="dv-industry__content">
               <ul className="dv-industry__list">
-                {ABOUT.industries[lang].map((ind, idx) => (
+                {about.industries[lang].map((ind, idx) => (
                   <li key={idx} className="dv-industry__text">
                     <span>{ind}</span>
                   </li>
@@ -50,7 +53,7 @@ export function AboutPage({ lang }: AboutPageProps) {
               <div className="dv-geography__map">
                 <img
                   src="/images/dvkran/dev__resmap.png"
-                  alt={ABOUT.geographyMapAlt[lang]}
+                  alt={about.geographyMapAlt[lang]}
                 />
               </div>
             </div>
@@ -58,10 +61,10 @@ export function AboutPage({ lang }: AboutPageProps) {
 
           {/* Mt today tiles */}
           <div className="dv-mt-today__title">
-            <span className="highlight">{ABOUT.mtTodayTitle[lang]}</span>
+            <span className="highlight">{about.mtTodayTitle[lang]}</span>
           </div>
           <div className="dv-tiles">
-            {ABOUT.mtTodayTiles.map((tile, idx) => (
+            {about.mtTodayTiles.map((tile, idx) => (
               <div className="dv-tile" key={idx}>
                 <img src={tile.icon} alt={tile.text[lang]} />
                 <div className="dv-tile__undertext">{tile.text[lang]}</div>
@@ -70,9 +73,9 @@ export function AboutPage({ lang }: AboutPageProps) {
           </div>
 
           {/* Certificates gallery */}
-          <div className="dv-industry__title">{ABOUT.certsTitle[lang]}</div>
+          <div className="dv-industry__title">{about.certsTitle[lang]}</div>
           <div className="dv-sert__gallery">
-            {ABOUT.certificates.map((src, idx) => (
+            {about.certificates.map((src, idx) => (
               <a
                 key={idx}
                 className="dv-sert__slide"

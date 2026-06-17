@@ -1,27 +1,39 @@
 'use client';
 
 import { useState } from 'react';
+import { UI, siteConfig, type Lang, type PageId } from './data';
 import {
-  KEY_PRODUCTS,
-  HOME_SERVICES,
-  HOME_PROJECTS,
-  PROVIDER,
-  CLIENTS,
-  UI,
-  siteConfig,
-  type Lang,
-  type PageId,
-} from './data';
+  getProducts,
+  getHomeServices,
+  getHomeProjects,
+  getProvider,
+  getClients,
+  getSettings,
+  type DynamicContent,
+} from './content-loader';
 import { SubscribeForm } from './SubscribeForm';
 
 interface HomePageProps {
   lang: Lang;
   onNavigate: (page: PageId) => void;
+  content: DynamicContent;
 }
 
-export function HomePage({ lang, onNavigate }: HomePageProps) {
+export function HomePage({ lang, onNavigate, content }: HomePageProps) {
   const t = UI[lang];
   const [activeProduct, setActiveProduct] = useState(0);
+
+  const products = getProducts(content);
+  const services = getHomeServices(content);
+  const projects = getHomeProjects(content);
+  const provider = getProvider(content);
+  const clients = getClients();
+  const settings = getSettings(content);
+
+  // Override hero text if dynamic content is loaded
+  const heroTitle = content.hero?.title[lang] ?? t.heroTitle;
+  const heroDescription = content.hero?.description[lang] ?? t.heroDescription;
+  const heroCtaLabel = content.hero?.ctaLabel[lang] ?? t.learnMore;
 
   return (
     <>
@@ -29,8 +41,8 @@ export function HomePage({ lang, onNavigate }: HomePageProps) {
       <section className="dv-face-section">
         <div className="dv-container dv-face-banner">
           <div className="dv-face-block">
-            <div className="dv-face-block__title">{t.heroTitle}</div>
-            <div className="dv-face-block__description">{t.heroDescription}</div>
+            <div className="dv-face-block__title">{heroTitle}</div>
+            <div className="dv-face-block__description">{heroDescription}</div>
             <a
               className="dv-button"
               href="/service"
@@ -39,7 +51,7 @@ export function HomePage({ lang, onNavigate }: HomePageProps) {
                 onNavigate('service');
               }}
             >
-              {t.learnMore}
+              {heroCtaLabel}
             </a>
           </div>
         </div>
@@ -54,12 +66,12 @@ export function HomePage({ lang, onNavigate }: HomePageProps) {
               <div className="dv-key-products__viewer">
                 <img
                   className="key-products__image"
-                  src={KEY_PRODUCTS[activeProduct].image}
-                  alt={KEY_PRODUCTS[activeProduct].type[lang]}
+                  src={products[activeProduct]?.image}
+                  alt={products[activeProduct]?.type[lang]}
                 />
               </div>
               <div className="dv-key-products__list">
-                {KEY_PRODUCTS.map((p, idx) => (
+                {products.map((p, idx) => (
                   <a
                     key={idx}
                     className={`dv-key-products__item${idx === activeProduct ? ' active' : ''}`}
@@ -87,7 +99,7 @@ export function HomePage({ lang, onNavigate }: HomePageProps) {
               {t.engineeringServicesTitle}
             </div>
             <div className="dv-services__list">
-              {HOME_SERVICES.map((s, idx) => (
+              {services.map((s, idx) => (
                 <a
                   key={idx}
                   className="dv-services__item"
@@ -114,7 +126,7 @@ export function HomePage({ lang, onNavigate }: HomePageProps) {
         <div className="dv-container">
           <div className="dv-project__header-tittle">{t.ourProjectsTitle}</div>
           <div className="dv-project__list">
-            {HOME_PROJECTS.map((p, idx) => (
+            {projects.map((p, idx) => (
               <a
                 key={idx}
                 className="dv-project__item"
@@ -135,7 +147,7 @@ export function HomePage({ lang, onNavigate }: HomePageProps) {
           <div className="dv-project__file">
             <a
               className="dv-button dv-project__button"
-              href={siteConfig.referenceListUrl}
+              href={settings.referenceListUrl}
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -148,9 +160,9 @@ export function HomePage({ lang, onNavigate }: HomePageProps) {
       {/* Provider block */}
       <section className="dv-provider-section">
         <div className="dv-container">
-          <div className="dv-provider__tittle">{PROVIDER.title[lang]}</div>
+          <div className="dv-provider__tittle">{provider.title[lang]}</div>
           <div className="dv-provider__text">
-            {PROVIDER.paragraphs[lang].map((p, idx) => (
+            {provider.paragraphs[lang].map((p, idx) => (
               <p key={idx}>{p}</p>
             ))}
           </div>
@@ -162,7 +174,7 @@ export function HomePage({ lang, onNavigate }: HomePageProps) {
         <div className="dv-container">
           <div className="dv-clients__tittle">{t.ourClients}</div>
           <div className="dv-clients__wrapper">
-            {CLIENTS.map((c, idx) => (
+            {clients.map((c, idx) => (
               <div className="dv-client" key={idx}>
                 <img src={c} alt={`Client ${idx + 1}`} />
               </div>

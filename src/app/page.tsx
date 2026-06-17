@@ -8,18 +8,26 @@ import { AboutPage } from '@/components/dvkran/AboutPage';
 import { ServicesPage } from '@/components/dvkran/ServicesPage';
 import { ProjectsPage } from '@/components/dvkran/ProjectsPage';
 import { ContactsPage } from '@/components/dvkran/ContactsPage';
+import { AdminPage } from '@/components/dvkran/AdminPage';
 import { UI, type Lang, type PageId } from '@/components/dvkran/data';
+import { loadContent, type DynamicContent } from '@/components/dvkran/content-loader';
 
 const LANG_STORAGE_KEY = 'dvkran-lang';
 
+type View = PageId | 'admin';
+
 export default function Home() {
-  // Lazy-initialize page from URL hash so refresh keeps current page
-  const [page, setPage] = useState<PageId>(() => {
+  // Lazy-initialize view from URL hash. Supports #admin in addition to page hashes.
+  const [view, setView] = useState<View>(() => {
     if (typeof window === 'undefined') return 'home';
     const hash = window.location.hash.replace(/^#/, '');
+    if (hash === 'admin') return 'admin';
     const valid: PageId[] = ['home', 'about', 'service', 'project', 'contacts'];
     return (valid as string[]).includes(hash) ? (hash as PageId) : 'home';
   });
+
+  // page derived from view (admin doesn't change current page in header)
+  const page: PageId = view === 'admin' ? 'home' : view;
 
   // Lazy-initialize language from localStorage (default: ru)
   const [lang, setLang] = useState<Lang>(() => {
@@ -28,25 +36,45 @@ export default function Home() {
     return stored === 'en' || stored === 'ru' ? stored : 'ru';
   });
 
+  // Dynamic content loaded from admin API (with static fallback)
+  const [content, setContent] = useState<DynamicContent>({ loaded: false });
+
   const [showTop, setShowTop] = useState(false);
+
+  // Load dynamic content on mount + every 60s (less frequent to avoid hammering Django)
+  useEffect(() => {
+    let active = true;
+    let timer: ReturnType<typeof setTimeout>;
+    const reload = async () => {
+      const c = await loadContent();
+      if (active) setContent(c);
+      // Re-schedule (longer interval when loaded, shorter on failure)
+      timer = setTimeout(reload, c.loaded ? 60_000 : 15_000);
+    };
+    reload();
+    return () => {
+      active = false;
+      clearTimeout(timer);
+    };
+  }, []);
 
   // Listen for hash changes (e.g., browser back/forward)
   useEffect(() => {
-    const valid: PageId[] = ['home', 'about', 'service', 'project', 'contacts'];
+    const valid: View[] = ['home', 'about', 'service', 'project', 'contacts', 'admin'];
     const onHash = () => {
       const h = window.location.hash.replace(/^#/, '');
       if ((valid as string[]).includes(h)) {
-        setPage(h as PageId);
+        setView(h as View);
       }
     };
     window.addEventListener('hashchange', onHash);
     return () => window.removeEventListener('hashchange', onHash);
   }, []);
 
-  // Scroll to top on page change
+  // Scroll to top on view change
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'auto' });
-  }, [page]);
+  }, [view]);
 
   // Back-to-top visibility
   useEffect(() => {
@@ -71,7 +99,7 @@ export default function Home() {
   }, [lang]);
 
   const handleNavigate = useCallback((next: PageId) => {
-    setPage(next);
+    setView(next);
     if (typeof window !== 'undefined') {
       const newHash = next === 'home' ? '' : `#${next}`;
       if (window.location.hash !== newHash) {
@@ -84,9 +112,21 @@ export default function Home() {
     setLang(next);
   }, []);
 
+  const handleExitAdmin = useCallback(() => {
+    setView('home');
+    if (typeof window !== 'undefined') {
+      window.history.pushState(null, '', window.location.pathname);
+    }
+  }, []);
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
+
+  // ---------- Admin view: full-screen, no header/footer ----------
+  if (view === 'admin') {
+    return <AdminPage onExit={handleExitAdmin} />;
+  }
 
   return (
     <div className="min-h-screen flex flex-col" style={{ background: '#fff' }}>
@@ -98,14 +138,16 @@ export default function Home() {
       />
 
       <main className="dv-main" style={{ flex: 1, display: 'block' }}>
-        {page === 'home' && <HomePage lang={lang} onNavigate={handleNavigate} />}
-        {page === 'about' && <AboutPage lang={lang} />}
-        {page === 'service' && <ServicesPage lang={lang} />}
-        {page === 'project' && <ProjectsPage lang={lang} />}
-        {page === 'contacts' && <ContactsPage lang={lang} />}
+        {view === 'home' && (
+          <HomePage lang={lang} onNavigate={handleNavigate} content={content} />
+        )}
+        {view === 'about' && <AboutPage lang={lang} content={content} />}
+        {view === 'service' && <ServicesPage lang={lang} content={content} />}
+        {view === 'project' && <ProjectsPage lang={lang} content={content} />}
+        {view === 'contacts' && <ContactsPage lang={lang} content={content} />}
       </main>
 
-      <Footer lang={lang} onNavigate={handleNavigate} />
+      <Footer lang={lang} onNavigate={handleNavigate} content={content} />
 
       <button
         className={`dv-to-top${showTop ? ' visible' : ''}`}

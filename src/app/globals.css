@@ -1502,3 +1502,278 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* ============================================================
+   Admin page styles
+   ============================================================ */
+
+.dv-admin-login {
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+}
+.dv-admin-login__panel {
+  background: #fff;
+  border: 1px solid var(--dv-border);
+  padding: 48px 40px;
+  max-width: 480px;
+  width: 100%;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.06);
+}
+.dv-admin-login__title {
+  color: var(--dv-brand);
+  font-size: 28px;
+  font-weight: 800;
+  margin: 0 0 16px;
+}
+.dv-admin-login__hint {
+  color: var(--dv-text-muted);
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0 0 24px;
+}
+.dv-admin-login__form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.dv-admin-login__footer {
+  margin-top: 24px;
+  text-align: center;
+}
+.dv-admin-link {
+  background: none;
+  border: none;
+  color: var(--dv-brand);
+  cursor: pointer;
+  font-size: 14px;
+  text-decoration: underline;
+  padding: 0;
+}
+.dv-admin-link:hover {
+  color: #d34225;
+}
+
+.dv-admin-loading {
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  color: var(--dv-text-muted);
+}
+
+.dv-admin {
+  background: #f5f5f5;
+  min-height: 100vh;
+}
+.dv-admin__topbar {
+  background: var(--dv-dark);
+  color: #fff;
+  padding: 16px 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.dv-admin__topbar-title {
+  font-size: 18px;
+  font-weight: 700;
+}
+.dv-admin__topbar-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.dv-admin-btn {
+  padding: 10px 18px;
+  border: none;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.dv-admin-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.dv-admin-btn--primary {
+  background: var(--dv-brand);
+  color: #fff;
+}
+.dv-admin-btn--primary:hover:not(:disabled) {
+  background: #d34225;
+}
+.dv-admin-btn--ghost {
+  background: transparent;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+.dv-admin-btn--ghost:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+.dv-admin-btn--danger {
+  background: transparent;
+  color: #d34225;
+  border: 1px solid #d34225;
+  padding: 6px 12px;
+  font-size: 12px;
+}
+.dv-admin-btn--danger:hover {
+  background: #d34225;
+  color: #fff;
+}
+
+.dv-admin__main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 30px 20px 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.dv-admin-card {
+  background: #fff;
+  border: 1px solid var(--dv-border);
+  padding: 24px 28px;
+}
+.dv-admin-card__title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--dv-dark);
+  margin: 0 0 20px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--dv-brand);
+}
+.dv-admin-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.dv-admin-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.dv-admin-field__label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--dv-text-muted);
+}
+.dv-admin-field__hint {
+  font-size: 12px;
+  color: var(--dv-text-muted);
+  opacity: 0.7;
+}
+.dv-admin-input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--dv-border-2);
+  background: #fff;
+  color: var(--dv-text);
+  font-size: 14px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+.dv-admin-input:focus {
+  border-color: var(--dv-brand);
+}
+textarea.dv-admin-input {
+  resize: vertical;
+  min-height: 60px;
+  line-height: 1.5;
+}
+.dv-admin-bilingual {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.dv-admin-bilingual__col {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.dv-admin-bilingual__tag {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--dv-brand);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.dv-admin-item {
+  border: 1px solid var(--dv-border);
+  padding: 16px;
+  background: #fafafa;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.dv-admin-item__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+.dv-admin-item__num {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--dv-text-muted);
+  letter-spacing: 1px;
+}
+.dv-admin-msg {
+  padding: 12px 20px;
+  margin: 0 auto;
+  max-width: 1100px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.dv-admin-msg--ok {
+  background: #e8f5e9;
+  color: #2e7d32;
+  border-left: 4px solid #2e7d32;
+}
+.dv-admin-msg--error {
+  background: #fbe9e7;
+  color: #c62828;
+  border-left: 4px solid #c62828;
+}
+.dv-admin__footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: var(--dv-dark);
+  color: #fff;
+  padding: 16px 30px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  z-index: 10;
+}
+
+@media (max-width: 767px) {
+  .dv-admin-bilingual {
+    grid-template-columns: 1fr;
+  }
+  .dv-admin__topbar {
+    padding: 12px 16px;
+  }
+  .dv-admin__main {
+    padding: 20px 12px 100px;
+  }
+  .dv-admin-card {
+    padding: 16px;
+  }
+  .dv-admin__footer {
+    padding: 12px 16px;
+  }
+}

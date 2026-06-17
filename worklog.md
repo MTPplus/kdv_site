@@ -191,3 +191,65 @@ Stage Summary:
 - EN button now fully functional — switches entire site to English (header, footer, all 5 pages, subscribe form, success modal).
 - Language persists across page refreshes via localStorage.
 - Document title and <html lang> attribute also update dynamically.
+
+---
+Task ID: 18
+Agent: main
+Task: Implement Django admin + content editing + preview (per user request).
+
+Work Log:
+- Installed Django 5.0.6 + djangorestframework 3.15.1 via pip.
+- Created full Django project at mini-services/django-admin/:
+  * 9 models (SiteSettings, HeroBlock, Product, HomeService, HomeProject, ProviderBlock, AboutPage, ServiceItem, ProjectItem) — all bilingual (ru/en).
+  * Singleton pattern for SiteSettings/HeroBlock/ProviderBlock/AboutPage.
+  * Ordered-list admin for Products/Services/Projects with list_editable order field.
+  * DRF serializer that splits multi-paragraph / multi-line text fields into arrays.
+  * /api/content/ endpoint returning the full site content as one JSON payload.
+  * /preview/ view that opens the Next.js site in a new tab.
+  * /admin/ Django admin UI with login (admin/admin).
+  * Custom admin landing page at / with links to admin + preview.
+  * seed_data.py populates DB with all default content from data.ts.
+- Started Django on port 8001; verified API returns full content.
+- PROBLEM: dev environment kills any background process between bash commands — both the
+  Django process and the watchdog/supervisor process were killed repeatedly.
+- DECISION: Since the environment doesn't allow long-running background processes, I built
+  an equivalent in-app admin that lives entirely inside Next.js (same port 3000):
+  * src/lib/content-store.ts: server-side JSON file at /home/z/my-project/data/content.json.
+    getContent() reads file every request (no in-memory cache) so admin edits show immediately.
+    saveContent() writes the file atomically.
+  * src/app/api/content/route.ts (GET): returns JSON content.
+  * src/app/api/content/save/route.ts (POST): validates admin token, saves content.
+  * src/components/dvkran/AdminPage.tsx: full-screen admin UI at /#admin hash.
+    - Login screen (token "admin", stored in localStorage).
+    - Sticky top bar with "Open preview", "Save", "Logout", "Back to site" buttons.
+    - 8 editable cards: Site settings, Hero, Products (add/remove), Home services,
+      Home projects, Provider block, About page, Service items, Project items.
+    - Bilingual fields (RU/EN side by side) for every text input.
+    - Bilingual list fields (textarea, one item per line) for paragraphs/industries/tiles.
+    - Add/remove buttons for ordered lists.
+    - Success/error messages after save.
+    - Preview button opens site in new tab.
+  * All site components (HomePage/AboutPage/ServicesPage/ProjectsPage/ContactsPage/Footer)
+    now consume content from /api/content with fallback to static data.ts.
+  * page.tsx: added "admin" as a view (via #admin hash). Admin view replaces the entire
+    page (no header/footer) for a focused editing experience.
+- Verified end-to-end:
+  * Login with token "admin" → admin panel loads with all current content.
+  * Edit Hero RU title to "Тест: новый заголовок RU" → click "Save" → success message.
+  * File /home/z/my-project/data/content.json updated correctly.
+  * Click "Back to site" → reload → site shows new title "ТЕСТ: НОВЫЙ ЗАГОЛОВОК RU".
+  * Restored original title via admin → site shows original again.
+  * Lint: 0 errors.
+- Django project remains in the repo as a reference / for production deployment where
+  long-running processes are supported. It can be started manually with:
+  `cd mini-services/django-admin && python3 manage.py runserver 0.0.0.0:8001`.
+  The Django /api/content/ returns exactly the same JSON shape as the Next.js API.
+
+Stage Summary:
+- Full admin implemented with content editing + preview. Accessible at /#admin (token: admin).
+- All site text is now editable: hero, products (8), home services (6), home projects (4),
+  provider block, about page (3 paragraphs + 11 industries + 8 tiles + signatures),
+  service items (8), project items (4), site settings (phones, emails, addresses, copyright,
+  reference list URL, yandex map URL). Every field is bilingual (RU/EN).
+- "Open preview" button opens the live site in a new tab; saved changes are visible
+  immediately (within 60s polling, or instantly on page reload).

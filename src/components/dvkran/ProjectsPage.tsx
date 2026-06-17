@@ -1,20 +1,27 @@
 'use client';
 
 import { PROJECTS, UI, type Lang } from './data';
+import { getProjectItems, type DynamicContent } from './content-loader';
 import { SubscribeForm } from './SubscribeForm';
 
 interface ProjectsPageProps {
   lang: Lang;
+  content: DynamicContent;
 }
 
-export function ProjectsPage({ lang }: ProjectsPageProps) {
+export function ProjectsPage({ lang, content }: ProjectsPageProps) {
   const t = UI[lang];
+  const items = getProjectItems(content);
+  const title = content.loaded ? (lang === 'ru' ? 'Портфолио выполненных проектов' : 'Portfolio of completed projects') : PROJECTS.title[lang];
+
   return (
     <>
       <div className="dv-container" style={{ paddingTop: 30, paddingBottom: 80 }}>
-        <div className="dv-page__title">{PROJECTS.title[lang]}</div>
+        <div className="dv-page__title">{title}</div>
         <div className="dv-project-filter">
-          <div className="dv-project-filter__label">{PROJECTS.filterLabel[lang]}</div>
+          <div className="dv-project-filter__label">
+            {content.loaded ? (lang === 'ru' ? 'Выбрать по направлению:' : 'Filter by direction:') : PROJECTS.filterLabel[lang]}
+          </div>
           <select
             className="dv-project-filter__select"
             name="project-filter"
@@ -34,7 +41,7 @@ export function ProjectsPage({ lang }: ProjectsPageProps) {
         <section className="dv-projects-section" style={{ marginBottom: 0 }}>
           <div className="dv-portfolio">
             <div className="dv-portfolio__tile">
-              {PROJECTS.items.map((item, idx) => (
+              {items.map((item, idx) => (
                 <div key={idx} className="dv-portfolio__item">
                   <div className="dv-portfolio__wrapper">
                     <div className="dv-portfolio__info">

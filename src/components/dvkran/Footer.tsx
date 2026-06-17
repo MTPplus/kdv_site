@@ -1,14 +1,22 @@
 'use client';
 
 import { UI, type Lang, type PageId } from './data';
+import { getSettings, type DynamicContent } from './content-loader';
 
 interface FooterProps {
   lang: Lang;
   onNavigate: (page: PageId) => void;
+  content: DynamicContent;
 }
 
-export function Footer({ lang, onNavigate }: FooterProps) {
-  const t = UI[lang];
+export function Footer({ lang, onNavigate, content }: FooterProps) {
+  // If dynamic content is loaded, override static UI strings with DB values
+  const settings = getSettings(content);
+  const phone = settings.phone;
+  const phoneHref = phone.replace(/[^+\d]/g, '');
+  const email = settings.email;
+  const addressFooter = settings.addressFooter[lang];
+  const copyright = settings.copyright[lang];
 
   const goHome = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -28,24 +36,30 @@ export function Footer({ lang, onNavigate }: FooterProps) {
               className="dv-footer__logo"
               href="/"
               onClick={goHome}
-              aria-label={t.backToHome}
+              aria-label={UI[lang].backToHome}
             ></a>
-            <div className="dv-footer__text">{t.footerText}</div>
+            <div className="dv-footer__text">
+              {content.loaded
+                ? (lang === 'ru'
+                    ? 'Компания «КРАН-ДВ» имеет производственные и инжиниринговые мощности для выполнения крановых проектов различного уровня сложности'
+                    : 'KRAN-DV has the production and engineering capacity to deliver crane projects of any complexity')
+                : UI[lang].footerText}
+            </div>
           </div>
           <div className="dv-footer__right">
             <nav className="dv-footer__contacts">
               <div className="dv-contacts__item">
                 <a
                   className="dv-contacts__number"
-                  href={`tel:${t.phoneHref}`}
+                  href={`tel:${phoneHref}`}
                   style={{ color: '#fff', textDecoration: 'none' }}
                 >
-                  {t.phone}
+                  {phone}
                 </a>
               </div>
               <div className="dv-contacts__item">
-                <a className="dv-contacts__email" href={`mailto:${t.email}`}>
-                  {t.email}
+                <a className="dv-contacts__email" href={`mailto:${email}`}>
+                  {email}
                 </a>
               </div>
               <div className="dv-contacts__item">
@@ -55,14 +69,14 @@ export function Footer({ lang, onNavigate }: FooterProps) {
                   onClick={goContacts}
                   style={{ color: '#fff', textDecoration: 'none' }}
                 >
-                  {t.addressFooter}
+                  {addressFooter}
                 </a>
               </div>
             </nav>
           </div>
         </div>
         <div className="dv-footer__copyright">
-          <div className="dv-copyright__text">{t.copyright}</div>
+          <div className="dv-copyright__text">{copyright}</div>
           <div className="dv-social">
             <a
               className="dv-social__item"

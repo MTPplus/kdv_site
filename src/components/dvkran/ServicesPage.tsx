@@ -1,19 +1,25 @@
 'use client';
 
 import { SERVICES, UI, type Lang } from './data';
+import { getServiceItems, getSettings, type DynamicContent } from './content-loader';
 
 interface ServicesPageProps {
   lang: Lang;
+  content: DynamicContent;
 }
 
-export function ServicesPage({ lang }: ServicesPageProps) {
+export function ServicesPage({ lang, content }: ServicesPageProps) {
   const t = UI[lang];
+  const items = getServiceItems(content);
+  const settings = getSettings(content);
+  const title = content.loaded ? (lang === 'ru' ? 'Услуги компании' : 'Company services') : SERVICES.title[lang];
+
   return (
     <div className="dv-container" style={{ paddingTop: 30, paddingBottom: 80 }}>
-      <div className="dv-page__title">{SERVICES.title[lang]}</div>
+      <div className="dv-page__title">{title}</div>
       <div className="dv-services">
         <div className="dv-services-tile">
-          {SERVICES.items.map((item, idx) => (
+          {items.map((item, idx) => (
             <div key={idx} className="dv-services__item single-element">
               <div className="single-element__image">
                 <img src={item.image} alt={item.title[lang]} />
@@ -33,7 +39,7 @@ export function ServicesPage({ lang }: ServicesPageProps) {
           <a
             style={{ color: '#ee7a04' }}
             className="dv-button-transparent"
-            href={SERVICES.referenceListUrl}
+            href={settings.referenceListUrl}
             target="_blank"
             rel="noopener noreferrer"
           >
