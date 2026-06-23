@@ -12,6 +12,7 @@ import {
   type DynamicContent,
 } from './content-loader';
 import { SubscribeForm } from './SubscribeForm';
+import { SafeImg } from './SafeImg';
 
 interface HomePageProps {
   lang: Lang;
@@ -45,10 +46,10 @@ export function HomePage({ lang, onNavigate, content }: HomePageProps) {
             <div className="dv-face-block__description">{heroDescription}</div>
             <a
               className="dv-button"
-              href="/service"
+              href="/about"
               onClick={(e) => {
                 e.preventDefault();
-                onNavigate('service');
+                onNavigate('about');
               }}
             >
               {heroCtaLabel}
@@ -100,21 +101,13 @@ export function HomePage({ lang, onNavigate, content }: HomePageProps) {
             </div>
             <div className="dv-services__list">
               {services.map((s, idx) => (
-                <a
-                  key={idx}
-                  className="dv-services__item"
-                  href="/service"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    onNavigate('service');
-                  }}
-                >
+                <div key={idx} className="dv-services__item">
                   <div className="single-element__image">
-                    <img src={s.image} alt={s.title[lang]} />
+                    <SafeImg src={s.image} alt={s.title[lang]} />
                   </div>
                   <div className="dv-single-element__title">{s.title[lang]}</div>
                   <div className="dv-button-transparent">{t.more}</div>
-                </a>
+                </div>
               ))}
             </div>
           </div>
@@ -127,21 +120,24 @@ export function HomePage({ lang, onNavigate, content }: HomePageProps) {
           <div className="dv-project__header-tittle">{t.ourProjectsTitle}</div>
           <div className="dv-project__list">
             {projects.map((p, idx) => (
-              <a
-                key={idx}
-                className="dv-project__item"
-                href="/"
-                onClick={(e) => {
-                  e.preventDefault();
-                  onNavigate('project');
-                }}
-              >
-                <img className="dv-project__img" src={p.image} alt={p.title[lang]} />
+              <div key={idx} className="dv-project__item">
+                <SafeImg className="dv-project__img" src={p.image} alt={p.title[lang]} />
                 <div className="dv-project__text-area">
                   <div className="dv-project__tittle">{p.title[lang]}</div>
                   <div className="dv-project__text">{p.text[lang]}</div>
                 </div>
-              </a>
+                <span className="dv-project__arrow" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none">
+                    <path
+                      d="M5 12h14M13 6l6 6-6 6"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </span>
+              </div>
             ))}
           </div>
           <div className="dv-project__file">
@@ -176,7 +172,7 @@ export function HomePage({ lang, onNavigate, content }: HomePageProps) {
           <div className="dv-clients__wrapper">
             {clients.map((c, idx) => (
               <div className="dv-client" key={idx}>
-                <img src={c} alt={`Client ${idx + 1}`} />
+                <SafeImg src={c} alt={`Client ${idx + 1}`} />
               </div>
             ))}
           </div>

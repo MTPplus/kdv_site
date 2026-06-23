@@ -69,8 +69,6 @@ export const siteConfig = {
 // ---------- Navigation ----------
 export const NAV_ITEMS = [
   { id: 'about', label: { ru: 'О компании', en: 'About' } },
-  { id: 'service', label: { ru: 'Услуги', en: 'Services' } },
-  { id: 'project', label: { ru: 'Проекты', en: 'Projects' } },
   { id: 'contacts', label: { ru: 'Контакты', en: 'Contacts' } },
 ] as const;
 

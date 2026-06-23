@@ -46,6 +46,8 @@ export interface ContentData {
     mtTodayTitle: Bilingual;
     mtTodayTiles: Array<{ text: Bilingual; icon: string }>;
     certsTitle: Bilingual;
+    geographyMapAlt: Bilingual;
+    certificates: string[];
   };
   serviceItems: Array<{ title: Bilingual; image: string }>;
   projectItems: Array<{
@@ -220,6 +222,16 @@ const DEFAULT_CONTENT: ContentData = {
       ru: 'Сертификаты и благодарственные письма',
       en: 'Certificates and letters of gratitude',
     },
+    geographyMapAlt: {
+      ru: 'География реализованных проектов',
+      en: 'Geography of completed projects',
+    },
+    certificates: [
+      ...[15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1].map(
+        (i) => `/images/dvkran/2023__05__sert${i}.jpg`
+      ),
+      ...[5, 4, 3, 2, 1].map((i) => `/images/dvkran/2023__05__review${i}.jpg`),
+    ],
   },
   serviceItems: [
     { title: { ru: 'Технический аудит производства и подготовка технического задания', en: 'Technical audit of production and preparation of technical specifications' }, image: '/images/dvkran/2023__05__2.-tehnicheskij-audit-proizvodstva.jpg' },

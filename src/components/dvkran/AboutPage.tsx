@@ -2,14 +2,33 @@
 
 import { ABOUT, type Lang } from './data';
 import { getAbout, type DynamicContent } from './content-loader';
+import { SafeImg } from './SafeImg';
 
 interface AboutPageProps {
   lang: Lang;
   content: DynamicContent;
 }
 
+// Fallback values used when dynamic content is missing fields
+const GEO_MAP_ALT_FALLBACK: { ru: string; en: string } = {
+  ru: 'География реализованных проектов',
+  en: 'Geography of completed projects',
+};
+
+const CERTIFICATES_FALLBACK: string[] = [
+  ...[15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1].map(
+    (i) => `/images/dvkran/2023__05__sert${i}.jpg`
+  ),
+  ...[5, 4, 3, 2, 1].map((i) => `/images/dvkran/2023__05__review${i}.jpg`),
+];
+
 export function AboutPage({ lang, content }: AboutPageProps) {
   const about = getAbout(content);
+
+  // Defensive: ensure all fields exist (some may be missing in older content.json)
+  const geographyMapAlt = about.geographyMapAlt ?? GEO_MAP_ALT_FALLBACK;
+  const certificates = about.certificates ?? CERTIFICATES_FALLBACK;
+
   return (
     <div className="dv-container" style={{ paddingTop: 30, paddingBottom: 80 }}>
       <div className="dv-page__title">{about.title[lang]}</div>
@@ -51,9 +70,9 @@ export function AboutPage({ lang, content }: AboutPageProps) {
             </div>
             <div className="dv-geography__content">
               <div className="dv-geography__map">
-                <img
+                <SafeImg
                   src="/images/dvkran/dev__resmap.png"
-                  alt={about.geographyMapAlt[lang]}
+                  alt={geographyMapAlt[lang] ?? GEO_MAP_ALT_FALLBACK[lang]}
                 />
               </div>
             </div>
@@ -66,7 +85,7 @@ export function AboutPage({ lang, content }: AboutPageProps) {
           <div className="dv-tiles">
             {about.mtTodayTiles.map((tile, idx) => (
               <div className="dv-tile" key={idx}>
-                <img src={tile.icon} alt={tile.text[lang]} />
+                <SafeImg src={tile.icon} alt={tile.text[lang]} />
                 <div className="dv-tile__undertext">{tile.text[lang]}</div>
               </div>
             ))}
@@ -75,7 +94,7 @@ export function AboutPage({ lang, content }: AboutPageProps) {
           {/* Certificates gallery */}
           <div className="dv-industry__title">{about.certsTitle[lang]}</div>
           <div className="dv-sert__gallery">
-            {about.certificates.map((src, idx) => (
+            {certificates.map((src, idx) => (
               <a
                 key={idx}
                 className="dv-sert__slide"
@@ -83,7 +102,7 @@ export function AboutPage({ lang, content }: AboutPageProps) {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <img src={src} alt={`Certificate ${idx + 1}`} />
+                <SafeImg src={src} alt={`Certificate ${idx + 1}`} />
               </a>
             ))}
           </div>

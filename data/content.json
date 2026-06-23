@@ -338,7 +338,33 @@
     "certsTitle": {
       "ru": "Сертификаты и благодарственные письма",
       "en": "Certificates and letters of gratitude"
-    }
+    },
+    "geographyMapAlt": {
+      "ru": "География реализованных проектов",
+      "en": "Geography of completed projects"
+    },
+    "certificates": [
+      "/images/dvkran/2023__05__sert15.jpg",
+      "/images/dvkran/2023__05__sert14.jpg",
+      "/images/dvkran/2023__05__sert13.jpg",
+      "/images/dvkran/2023__05__sert12.jpg",
+      "/images/dvkran/2023__05__sert11.jpg",
+      "/images/dvkran/2023__05__sert10.jpg",
+      "/images/dvkran/2023__05__sert9.jpg",
+      "/images/dvkran/2023__05__sert8.jpg",
+      "/images/dvkran/2023__05__sert7.jpg",
+      "/images/dvkran/2023__05__sert6.jpg",
+      "/images/dvkran/2023__05__sert5.jpg",
+      "/images/dvkran/2023__05__sert4.jpg",
+      "/images/dvkran/2023__05__sert3.jpg",
+      "/images/dvkran/2023__05__sert2.jpg",
+      "/images/dvkran/2023__05__sert1.jpg",
+      "/images/dvkran/2023__05__review5.jpg",
+      "/images/dvkran/2023__05__review4.jpg",
+      "/images/dvkran/2023__05__review3.jpg",
+      "/images/dvkran/2023__05__review2.jpg",
+      "/images/dvkran/2023__05__review1.jpg"
+    ]
   },
   "serviceItems": [
     {
