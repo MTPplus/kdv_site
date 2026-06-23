@@ -653,6 +653,23 @@
   gap: 20px;
   cursor: pointer;
   transition: transform 0.2s ease;
+  position: relative;
+  padding-bottom: 12px;
+}
+.dv-project__item::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  background-color: var(--dv-brand);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.dv-project__item:hover::after {
+  transform: scaleX(1);
 }
 .dv-project__item:hover {
   transform: translateY(-4px);
