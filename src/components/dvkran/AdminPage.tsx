@@ -4,8 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import type { ContentData, Bilingual } from '@/lib/content-store';
 import { MediaPicker } from './MediaPicker';
 
-const ADMIN_TOKEN_KEY = 'dvkran-admin-token';
-const DEFAULT_TOKEN = 'admin';
+const ADMIN_AUTH_KEY = 'dvkran-admin-auth';
 
 interface AdminPageProps {
   onExit: () => void;
@@ -16,8 +15,16 @@ interface MediaPickerTarget {
   value: string;
 }
 
+// Encode login:password as base64 for the x-admin-auth header.
+function encodeAuth(login: string, password: string): string {
+  if (typeof window === 'undefined') return '';
+  return btoa(`${login}:${password}`);
+}
+
 export function AdminPage({ onExit }: AdminPageProps) {
-  const [token, setToken] = useState<string>('');
+  const [login, setLogin] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [authHeader, setAuthHeader] = useState<string>('');
   const [authed, setAuthed] = useState(false);
   const [data, setData] = useState<ContentData | null>(null);
   const [loading, setLoading] = useState(false);
@@ -33,12 +40,20 @@ export function AdminPage({ onExit }: AdminPageProps) {
     return `item-${nextIdRef.current}-${Date.now()}`;
   };
 
-  // Restore token from storage on mount
+  // Restore saved credentials from storage on mount
   useEffect(() => {
-    const saved = window.localStorage.getItem(ADMIN_TOKEN_KEY);
+    const saved = window.localStorage.getItem(ADMIN_AUTH_KEY);
     if (saved) {
-      setToken(saved);
-      setAuthed(true);
+      try {
+        const decoded = atob(saved);
+        const [l, p] = decoded.split(':');
+        setLogin(l || '');
+        setPassword(p || '');
+        setAuthHeader(saved);
+        setAuthed(true);
+      } catch {
+        window.localStorage.removeItem(ADMIN_AUTH_KEY);
+      }
     }
   }, []);
 
@@ -68,21 +83,38 @@ export function AdminPage({ onExit }: AdminPageProps) {
       .finally(() => setLoading(false));
   }, [authed]);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (token === DEFAULT_TOKEN) {
-      window.localStorage.setItem(ADMIN_TOKEN_KEY, token);
+    setLoading(true);
+    setMsg(null);
+    const auth = encodeAuth(login, password);
+    try {
+      const res = await fetch('/api/content/save', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'x-admin-auth': auth },
+        body: JSON.stringify({}),
+      });
+      if (res.status === 401) {
+        setMsg({ type: 'error', text: 'Неверный логин или пароль' });
+        return;
+      }
+      window.localStorage.setItem(ADMIN_AUTH_KEY, auth);
+      setAuthHeader(auth);
       setAuthed(true);
       setMsg(null);
-    } else {
-      setMsg({ type: 'error', text: 'Неверный токен. По умолчанию: admin' });
+    } catch (e) {
+      setMsg({ type: 'error', text: String(e) });
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleLogout = () => {
-    window.localStorage.removeItem(ADMIN_TOKEN_KEY);
+    window.localStorage.removeItem(ADMIN_AUTH_KEY);
     setAuthed(false);
-    setToken('');
+    setLogin('');
+    setPassword('');
+    setAuthHeader('');
     setData(null);
   };
 
@@ -93,9 +125,14 @@ export function AdminPage({ onExit }: AdminPageProps) {
     try {
       const res = await fetch('/api/content/save', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'x-admin-token': token },
+        headers: { 'Content-Type': 'application/json', 'x-admin-auth': authHeader },
         body: JSON.stringify(data),
       });
+      if (res.status === 401) {
+        setMsg({ type: 'error', text: 'Сессия истекла. Войдите заново.' });
+        handleLogout();
+        return;
+      }
       const j = await res.json();
       if (j.ok) {
         setMsg({ type: 'ok', text: 'Сохранено! Изменения видны на сайте.' });
@@ -120,19 +157,30 @@ export function AdminPage({ onExit }: AdminPageProps) {
         <div className="dv-admin-login__panel">
           <h1 className="dv-admin-login__title">КРАН-ДВ — Admin</h1>
           <p className="dv-admin-login__hint">
-            Введите токен администратора для входа в панель управления контентом.
+            Введите логин и пароль для входа в панель управления контентом.
+            <br />
+            <small style={{ color: '#7b7b7b' }}>По умолчанию: admin / admin</small>
           </p>
           <form onSubmit={handleLogin} className="dv-admin-login__form">
             <input
-              type="password"
-              value={token}
-              onChange={(e) => setToken(e.target.value)}
-              placeholder="Admin token"
+              type="text"
+              value={login}
+              onChange={(e) => setLogin(e.target.value)}
+              placeholder="Логин"
               className="dv-admin-input"
               autoFocus
+              required
             />
-            <button type="submit" className="dv-button">
-              Войти
+            <input
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Пароль"
+              className="dv-admin-input"
+              required
+            />
+            <button type="submit" className="dv-button" disabled={loading}>
+              {loading ? 'Вход...' : 'Войти'}
             </button>
           </form>
           {msg && <div className="dv-admin-msg dv-admin-msg--error">{msg.text}</div>}
