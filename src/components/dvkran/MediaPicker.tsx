@@ -6,7 +6,7 @@ interface MediaPickerProps {
   open: boolean;
   onClose: () => void;
   onSelect: (url: string) => void;
-  adminToken: string;
+  adminAuth: string;
 }
 
 interface UploadedFile {
@@ -14,7 +14,7 @@ interface UploadedFile {
   filename: string;
 }
 
-export function MediaPicker({ open, onClose, onSelect, adminToken }: MediaPickerProps) {
+export function MediaPicker({ open, onClose, onSelect, adminAuth }: MediaPickerProps) {
   const [files, setFiles] = useState<UploadedFile[]>([]);
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
@@ -22,7 +22,6 @@ export function MediaPicker({ open, onClose, onSelect, adminToken }: MediaPicker
   const [preview, setPreview] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Load list of already-uploaded files when opened
   useEffect(() => {
     if (!open) return;
     void loadFiles();
@@ -51,7 +50,7 @@ export function MediaPicker({ open, onClose, onSelect, adminToken }: MediaPicker
       fd.append('file', file);
       const res = await fetch('/api/media/upload', {
         method: 'POST',
-        headers: { 'x-admin-token': adminToken },
+        headers: { 'x-admin-auth': adminAuth },
         body: fd,
       });
       const j = await res.json();
@@ -74,19 +73,17 @@ export function MediaPicker({ open, onClose, onSelect, adminToken }: MediaPicker
     if (f) void handleUpload(f);
   };
 
-  const handleDrop = (e: React.DragEvent) => {
-    e.preventDefault();
-    const f = e.dataTransfer.files?.[0];
-    if (f) void handleUpload(f);
-  };
-
   if (!open) return null;
 
   return (
     <div
       className="dv-media-picker"
       onDragOver={(e) => e.preventDefault()}
-      onDrop={handleDrop}
+      onDrop={(e) => {
+        e.preventDefault();
+        const f = e.dataTransfer.files?.[0];
+        if (f) void handleUpload(f);
+      }}
     >
       <div className="dv-media-picker__backdrop" onClick={onClose}></div>
       <div className="dv-media-picker__panel">
@@ -98,7 +95,6 @@ export function MediaPicker({ open, onClose, onSelect, adminToken }: MediaPicker
         </div>
 
         <div className="dv-media-picker__body">
-          {/* Upload dropzone */}
           <div
             className="dv-media-dropzone"
             onClick={() => fileInputRef.current?.click()}
@@ -138,7 +134,6 @@ export function MediaPicker({ open, onClose, onSelect, adminToken }: MediaPicker
 
           {error && <div className="dv-admin-msg dv-admin-msg--error">{error}</div>}
 
-          {/* Preview selected file */}
           {preview && (
             <div className="dv-media-preview">
               <div className="dv-media-preview__label">Выбрано:</div>
@@ -149,7 +144,6 @@ export function MediaPicker({ open, onClose, onSelect, adminToken }: MediaPicker
             </div>
           )}
 
-          {/* Library */}
           <div className="dv-media-library">
             <div className="dv-media-library__head">
               <span>Загруженные файлы ({files.length})</span>

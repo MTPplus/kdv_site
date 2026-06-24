@@ -541,7 +541,7 @@ export function AdminPage({ onExit }: AdminPageProps) {
         open={mediaPickerTarget !== null}
         onClose={() => setMediaPickerTarget(null)}
         onSelect={applyMedia}
-        adminToken={token}
+        adminAuth={authHeader}
       />
     </div>
   );
