@@ -142,7 +142,7 @@ export function HomePage({ lang, onNavigate, content }: HomePageProps) {
         </div>
       </section>
 
-      {/* Provider block */}
+      {/* Provider block — text only, no crane background */}
       <section className="dv-provider-section">
         <div className="dv-container">
           <div className="dv-provider__tittle">{provider.title[lang]}</div>
@@ -152,6 +152,11 @@ export function HomePage({ lang, onNavigate, content }: HomePageProps) {
             ))}
           </div>
         </div>
+      </section>
+
+      {/* Crane + Russia map — standalone full-width image */}
+      <section className="dv-crane-banner-section">
+        <div className="dv-crane-banner" />
       </section>
 
       {/* Clients */}

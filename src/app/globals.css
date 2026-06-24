@@ -717,18 +717,11 @@
   }
 }
 
-/* Provider section */
+/* Provider section — text only */
 .dv-provider-section {
   margin-bottom: 0;
-  min-height: 700px;
-  background-color: var(--dv-bg-soft);
-  background-image: url("/images/dvkran/subscribe-background.png");
-  background-repeat: no-repeat;
-  background-position: center bottom;
-  background-size: cover;
-  padding: 60px 0 0;
-  display: flex;
-  align-items: flex-start;
+  padding: 60px 0;
+  background-color: #fff;
 }
 .dv-provider__tittle {
   font-size: 48px;
@@ -744,6 +737,30 @@
 }
 .dv-provider__text p {
   margin: 0 0 16px;
+}
+
+/* Crane + Russia map — standalone full-width image */
+.dv-crane-banner-section {
+  margin: 0;
+  width: 100%;
+}
+.dv-crane-banner {
+  width: 100%;
+  height: 500px;
+  background-image: url("/images/dvkran/subscribe-background.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+}
+@media (max-width: 1023px) {
+  .dv-crane-banner {
+    height: 350px;
+  }
+}
+@media (max-width: 767px) {
+  .dv-crane-banner {
+    height: 220px;
+  }
 }
 
 /* Clients section */
