@@ -817,12 +817,35 @@
   margin-bottom: 100px;
 }
 .dv-subscribe {
+  position: relative;
   background-color: var(--dv-bg-soft);
   padding: 55px 58px;
-  background-image: url("/images/dvkran/footer-logo.svg");
+  background-image: url("/images/dvkran/subscribe-background.png");
   background-repeat: no-repeat;
   background-position: right center;
-  background-size: 280px auto;
+  background-size: cover;
+  overflow: hidden;
+}
+/* Semi-transparent overlay so the form is readable over the image */
+.dv-subscribe::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    rgba(240, 246, 250, 0.96) 0%,
+    rgba(240, 246, 250, 0.85) 45%,
+    rgba(240, 246, 250, 0.3) 100%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+/* Ensure form content sits above the overlay */
+.dv-subscribe__title,
+.dv-subscribe__form,
+.dv-subscribe__note {
+  position: relative;
+  z-index: 1;
 }
 .dv-subscribe__title {
   font-size: 40px;
