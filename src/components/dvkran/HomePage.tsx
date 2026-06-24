@@ -110,7 +110,6 @@ export function HomePage({ lang, onNavigate, content }: HomePageProps) {
                     <SafeImg src={s.image} alt={s.title[lang]} />
                   </div>
                   <div className="dv-single-element__title">{s.title[lang]}</div>
-                  <div className="dv-button-transparent">{t.more}</div>
                 </div>
               ))}
             </div>

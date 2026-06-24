@@ -12,9 +12,12 @@ export function ContactsPage({ lang, content }: ContactsPageProps) {
   const settings = getSettings(content);
   const title = content.loaded ? (lang === 'ru' ? 'Контакты' : 'Contacts') : CONTACTS.title[lang];
   const officeName = content.loaded ? (lang === 'ru' ? 'Головной офис:' : 'Head office:') : CONTACTS.officeName[lang];
+  const productionName = lang === 'ru' ? 'Производственная площадка:' : 'Production site:';
   const phoneLabel = content.loaded ? (lang === 'ru' ? 'Тел.:' : 'Tel.:') : CONTACTS.phoneLabel[lang];
   const emailLabel = content.loaded ? 'E-mail:' : CONTACTS.emailLabel[lang];
   const mapTitle = content.loaded ? (lang === 'ru' ? 'Карта — офис КРАН-ДВ' : 'Map — KRAN-DV office') : CONTACTS.mapTitle[lang];
+
+  const productionAddress = settings.addressProduction?.[lang] ?? (lang === 'ru' ? '680031, г. Хабаровск, ул. Промышленная, 15' : '680031, Khabarovsk, Promyshlennaya st., 15');
 
   return (
     <div className="dv-container" style={{ paddingTop: 30, paddingBottom: 80 }}>
@@ -27,7 +30,11 @@ export function ContactsPage({ lang, content }: ContactsPageProps) {
               <div className="dv-contact__info">
                 <div className="dv-contact__name">{officeName}</div>
                 <div className="dv-contact__row">{settings.addressOffice[lang]}</div>
-                <div className="dv-contact__row">
+
+                <div className="dv-contact__name" style={{ marginTop: 30 }}>{productionName}</div>
+                <div className="dv-contact__row">{productionAddress}</div>
+
+                <div className="dv-contact__row" style={{ marginTop: 30 }}>
                   {phoneLabel}{' '}
                   {[settings.phone, settings.phoneAdditional].map((p, idx) => (
                     <span key={idx}>

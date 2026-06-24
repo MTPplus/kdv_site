@@ -350,6 +350,11 @@ export function AdminPage({ onExit }: AdminPageProps) {
             onChange={(v) => update((d) => { d.settings.addressOffice = v; })}
           />
           <BilingualField
+            label="Адрес производственной площадки"
+            value={data.settings.addressProduction}
+            onChange={(v) => update((d) => { d.settings.addressProduction = v; })}
+          />
+          <BilingualField
             label="Copyright"
             value={data.settings.copyright}
             onChange={(v) => update((d) => { d.settings.copyright = v; })}

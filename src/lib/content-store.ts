@@ -21,6 +21,7 @@ export interface ContentData {
     emailOffice: string;
     addressFooter: Bilingual;
     addressOffice: Bilingual;
+    addressProduction: Bilingual;
     copyright: Bilingual;
     referenceListUrl: string;
     yandexMapSrc: string;
@@ -71,6 +72,10 @@ const DEFAULT_CONTENT: ContentData = {
     addressOffice: {
       ru: '680012 г. Хабаровск, ул. Флегонтова, 27',
       en: '680012 Khabarovsk, Flegontova st., 27',
+    },
+    addressProduction: {
+      ru: '680031, г. Хабаровск, ул. Промышленная, 15',
+      en: '680031, Khabarovsk, Promyshlennaya st., 15',
     },
     copyright: {
       ru: '2023 @ Все права защищены.',

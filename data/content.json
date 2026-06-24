@@ -17,7 +17,11 @@
       "en": "2026 @ All rights reserved."
     },
     "referenceListUrl": "https://drive.google.com/file/d/1HalIDIAwc5oqhoHxim3A78mnr8v51ahx/view",
-    "yandexMapSrc": "https://yandex.ru/map-widget/v1/?um=constructor%3Aaa150f6d617c96024515a4c9a4014a7d9cb8bdb193c9e1fc35d4b7a18a868e14&amp;source=constructor"
+    "yandexMapSrc": "https://yandex.ru/map-widget/v1/?um=constructor%3Aaa150f6d617c96024515a4c9a4014a7d9cb8bdb193c9e1fc35d4b7a18a868e14&amp;source=constructor",
+    "addressProduction": {
+      "ru": "680031, г. Хабаровск, ул. Промышленная, 15",
+      "en": "680031, Khabarovsk, Promyshlennaya st., 15"
+    }
   },
   "hero": {
     "title": {
@@ -169,33 +173,33 @@
     {
       "title": {
         "ru": "Кран грейферный 10 т для АО Якутцемент",
-        "en": ""
+        "en": "Grab crane 10 t for AO Yakutcement"
       },
       "text": {
         "ru": "Кран мостовой электрический специальный грейферный КМГ-10-А7-33-У2; г/п 10 т; пролёт 33 м; режим работы А7; управление из закрытой кабины.",
-        "en": ""
+        "en": "Electric overhead special grab crane KMG-10-A7; span 22.5 m; lifting height 12 m; operation mode A7"
       },
       "image": "/uploads/adasd-png-299e2bba0899.png"
     },
     {
       "title": {
         "ru": "Кран мостовой 16 т для АО БЭТ",
-        "en": ""
+        "en": "Overhead crane 16 t for AO BET"
       },
       "text": {
         "ru": "Кран мостовой электрический двухбалочный КМ 2-16-А5-28,5-У3; г/п 16 т; режим работы А5; пролёт 28,5 м; управление из закрытой кабины.",
-        "en": ""
+        "en": "Electric double-girder overhead crane KM 2-16-A5-28.5-U3; span 28.5 m; lifting height 16 m; operation mode A5"
       },
       "image": "/uploads/img-20240805-wa0017-16393b4602bc.jpg"
     },
     {
       "title": {
         "ru": "Кран мостовой 30 т  для Корфовского каменного карьера",
-        "en": ""
+        "en": "Overhead crane 30 t for Korf stone quarry"
       },
       "text": {
         "ru": "Кран мостовой электрический двухбалочный КМ 2-30/10-А3-9,25-У1; г/п 30/10 т; режим работы А3; пролёт 9,25 м; управление с пола, по радиоканалу.",
-        "en": ""
+        "en": "Electric double-girder overhead crane KM 2-30/10-A3-9.25-U3; span 9.25 m; lifting height 10 m; operation mode A3"
       },
       "image": "/uploads/20240710-130447-e0ed8b4ce7e1.jpg"
     }
