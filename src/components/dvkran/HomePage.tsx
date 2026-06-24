@@ -65,11 +65,15 @@ export function HomePage({ lang, onNavigate, content }: HomePageProps) {
             <div className="dv-key-products__title">{t.productsTitle}</div>
             <div className="dv-key-products__view">
               <div className="dv-key-products__viewer">
-                <img
-                  className="key-products__image"
-                  src={products[activeProduct]?.image}
-                  alt={products[activeProduct]?.type[lang]}
-                />
+                {products[activeProduct]?.image ? (
+                  <img
+                    className="key-products__image"
+                    src={products[activeProduct].image}
+                    alt={products[activeProduct]?.type[lang] ?? ''}
+                  />
+                ) : (
+                  <div className="dv-key-products__placeholder">Нет изображения</div>
+                )}
               </div>
               <div className="dv-key-products__list">
                 {products.map((p, idx) => (
