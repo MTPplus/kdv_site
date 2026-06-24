@@ -142,38 +142,42 @@ export function HomePage({ lang, onNavigate, content }: HomePageProps) {
         </div>
       </section>
 
-      {/* Provider block — text only, no crane background */}
-      <section className="dv-provider-section">
-        <div className="dv-container">
-          <div className="dv-provider__tittle">{provider.title[lang]}</div>
-          <div className="dv-provider__text">
-            {provider.paragraphs[lang].map((p, idx) => (
-              <p key={idx}>{p}</p>
-            ))}
+      {/* Background wrapper: provider + crane + clients + subscribe
+          all share the decorative bottom_background pattern rising from the footer */}
+      <div className="dv-bottom-bg">
+        {/* Provider block — text only, no crane background */}
+        <section className="dv-provider-section">
+          <div className="dv-container">
+            <div className="dv-provider__tittle">{provider.title[lang]}</div>
+            <div className="dv-provider__text">
+              {provider.paragraphs[lang].map((p, idx) => (
+                <p key={idx}>{p}</p>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      {/* Crane + Russia map — standalone full-width image */}
-      <section className="dv-crane-banner-section">
-        <div className="dv-crane-banner" />
-      </section>
+        {/* Crane + Russia map — standalone image, limited to container width */}
+        <section className="dv-crane-banner-section">
+          <div className="dv-crane-banner" />
+        </section>
 
-      {/* Clients */}
-      <section className="dv-clients-section">
-        <div className="dv-container">
-          <div className="dv-clients__tittle">{t.ourClients}</div>
-          <div className="dv-clients__wrapper">
-            {clients.map((c, idx) => (
-              <div className="dv-client" key={idx}>
-                <SafeImg src={c} alt={`Client ${idx + 1}`} />
-              </div>
-            ))}
+        {/* Clients */}
+        <section className="dv-clients-section">
+          <div className="dv-container">
+            <div className="dv-clients__tittle">{t.ourClients}</div>
+            <div className="dv-clients__wrapper">
+              {clients.map((c, idx) => (
+                <div className="dv-client" key={idx}>
+                  <SafeImg src={c} alt={`Client ${idx + 1}`} />
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <SubscribeForm lang={lang} />
+        <SubscribeForm lang={lang} />
+      </div>
     </>
   );
 }

@@ -717,11 +717,24 @@
   }
 }
 
+/* Decorative background wrapper — the bottom_background pattern rises from the
+   bottom (footer) up through provider + crane + clients + subscribe sections,
+   matching the original dvkran.ru composition. */
+.dv-bottom-bg {
+  position: relative;
+  width: 100%;
+  background-image: url("/images/dvkran/bottom-background.png");
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  background-size: cover;
+  background-attachment: scroll;
+}
+
 /* Provider section — text only */
 .dv-provider-section {
   margin-bottom: 0;
   padding: 60px 0;
-  background-color: #fff;
+  background: transparent;
 }
 .dv-provider__tittle {
   font-size: 48px;
@@ -739,14 +752,16 @@
   margin: 0 0 16px;
 }
 
-/* Crane + Russia map — standalone full-width image */
+/* Crane + Russia map — standalone image, limited to container width */
 .dv-crane-banner-section {
-  margin: 0;
+  margin: 0 0 100px 0;
   width: 100%;
 }
 .dv-crane-banner {
   width: 100%;
-  height: 500px;
+  max-width: 1100px;
+  margin: 0 auto;
+  height: 380px;
   background-image: url("/images/dvkran/subscribe-background.png");
   background-repeat: no-repeat;
   background-position: center;
@@ -754,12 +769,12 @@
 }
 @media (max-width: 1023px) {
   .dv-crane-banner {
-    height: 350px;
+    height: 300px;
   }
 }
 @media (max-width: 767px) {
   .dv-crane-banner {
-    height: 220px;
+    height: 200px;
   }
 }
 
@@ -844,7 +859,7 @@
   position: relative;
   min-height: 400px;
   padding: 55px 58px;
-  background-color: var(--dv-bg-soft);
+  background-color: rgba(240, 246, 250, 0.92);
   background-image: url("/images/dvkran/backgoung2.svg");
   background-repeat: no-repeat;
   background-position: right center;
