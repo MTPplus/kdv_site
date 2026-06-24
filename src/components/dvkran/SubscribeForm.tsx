@@ -57,26 +57,30 @@ export function SubscribeForm({ lang, compact = false }: SubscribeFormProps) {
       <section className="dv-subscribe-section" style={compact ? { marginBottom: 40 } : undefined}>
         <div className="dv-container">
           <div className="dv-subscribe">
-            <div className="dv-subscribe__title">{t.haveQuestions}</div>
-            <form className="dv-subscribe__form" onSubmit={handleSubmit}>
-              <input
-                className="dv-subscribe__name"
-                type="text"
-                name="name"
-                placeholder={t.namePlaceholder}
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-              />
-              <input
-                className="dv-subscribe__phone"
-                type="tel"
-                name="phone"
-                placeholder={t.phonePlaceholder}
-                value={phone}
-                onChange={(e) => setPhone(e.target.value)}
-                required
-              />
+            {/* Top: crane + Russia map image (as on original dvkran.ru) */}
+            <div className="dv-subscribe__image" aria-hidden="true"></div>
+            {/* Bottom: form with geometric SVG background */}
+            <div className="dv-subscribe__body">
+              <div className="dv-subscribe__title">{t.haveQuestions}</div>
+              <form className="dv-subscribe__form" onSubmit={handleSubmit}>
+                <input
+                  className="dv-subscribe__name"
+                  type="text"
+                  name="name"
+                  placeholder={t.namePlaceholder}
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  required
+                />
+                <input
+                  className="dv-subscribe__phone"
+                  type="tel"
+                  name="phone"
+                  placeholder={t.phonePlaceholder}
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  required
+                />
               <input
                 className="dv-button dv-subscribe__button"
                 type="submit"
@@ -84,6 +88,7 @@ export function SubscribeForm({ lang, compact = false }: SubscribeFormProps) {
               />
             </form>
             <div className="dv-subscribe__note">{t.privacyNote}</div>
+            </div>
           </div>
         </div>
       </section>

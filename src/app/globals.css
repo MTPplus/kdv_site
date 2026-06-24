@@ -819,28 +819,27 @@
 .dv-subscribe {
   position: relative;
   background-color: var(--dv-bg-soft);
-  padding: 55px 58px;
-  background-image: url("/images/dvkran/subscribe-background.png");
-  background-repeat: no-repeat;
-  background-position: right center;
-  background-size: cover;
+  padding: 0;
   overflow: hidden;
 }
-/* Semi-transparent overlay so the form is readable over the image */
-.dv-subscribe::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to right,
-    rgba(240, 246, 250, 0.96) 0%,
-    rgba(240, 246, 250, 0.85) 45%,
-    rgba(240, 246, 250, 0.3) 100%
-  );
-  pointer-events: none;
-  z-index: 0;
+/* Top: crane + Russia map image */
+.dv-subscribe__image {
+  width: 100%;
+  height: 220px;
+  background-image: url("/images/dvkran/subscribe-background.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }
-/* Ensure form content sits above the overlay */
+/* Bottom: form with geometric SVG background */
+.dv-subscribe__body {
+  position: relative;
+  padding: 50px 58px;
+  background-color: var(--dv-bg-soft);
+  background-image: url("/images/dvkran/backgoung2.svg");
+  background-repeat: no-repeat;
+  background-position: right center;
+}
 .dv-subscribe__title,
 .dv-subscribe__form,
 .dv-subscribe__note {
@@ -890,7 +889,10 @@
 }
 
 @media (max-width: 767px) {
-  .dv-subscribe {
+  .dv-subscribe__image {
+    height: 140px;
+  }
+  .dv-subscribe__body {
     padding: 32px 24px;
     background-size: 180px auto;
   }
