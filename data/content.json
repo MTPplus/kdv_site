@@ -5,8 +5,8 @@
     "email": "kran-dv@microtermplus.ru",
     "emailOffice": "kran-dv@microtermplus.ru",
     "addressFooter": {
-      "ru": "680001, г. Хабаровск, ул. Монтажная, 30, строение А, офис 21",
-      "en": "680001, Khabarovsk, Montazhnaya st., 30, building A, office 21"
+      "ru": "680012 г. Хабаровск, ул. Флегонтова, 27",
+      "en": "680012 Khabarovsk, Flegontova st., 27"
     },
     "addressOffice": {
       "ru": "680012 г. Хабаровск, ул. Флегонтова, 27",
@@ -17,7 +17,7 @@
       "en": "2026 @ All rights reserved."
     },
     "referenceListUrl": "https://drive.google.com/file/d/1HalIDIAwc5oqhoHxim3A78mnr8v51ahx/view",
-    "yandexMapSrc": "https://yandex.ru/map-widget/v1/?um=constructor%3Aa5577eaa4f3e4b688a0146ae51309a8d1cba1d6d711c23dc71bdca3efcdc0854&source=constructor"
+    "yandexMapSrc": "https://yandex.ru/map-widget/v1/?um=constructor%3Aaa150f6d617c96024515a4c9a4014a7d9cb8bdb193c9e1fc35d4b7a18a868e14&amp;source=constructor"
   },
   "hero": {
     "title": {
@@ -39,21 +39,21 @@
         "ru": "Краны козловые",
         "en": "Gantry cranes"
       },
-      "image": "/images/dvkran/2023__09__product-1.png"
+      "image": "/uploads/img-20230619-wa0007-7c180edd13e7.jpg"
     },
     {
       "type": {
         "ru": "Краны мостовые",
         "en": "Bridge cranes"
       },
-      "image": "/images/dvkran/2023__09__product-2.png"
+      "image": "/uploads/image-6e73f881774d.jpg"
     },
     {
       "type": {
         "ru": "Кран-балки",
         "en": "Jib cranes"
       },
-      "image": "/images/dvkran/2023__09__product-3.png"
+      "image": "/uploads/img-20241221-65122968580d.jpg"
     },
     {
       "type": {
@@ -74,21 +74,14 @@
         "ru": "Аппаратные помещения",
         "en": "Control rooms"
       },
-      "image": "/images/dvkran/2023__09__product-6.png"
-    },
-    {
-      "type": {
-        "ru": "Аппаратные помещения",
-        "en": "Control rooms"
-      },
-      "image": "/images/dvkran/2023__09__product-7.png"
+      "image": "/uploads/img-1440-jpg-d4c44c01f693.jpg"
     },
     {
       "type": {
         "ru": "Вспомогательное оборудование",
         "en": "Auxiliary equipment"
       },
-      "image": "/images/dvkran/2023__09__product-8.png"
+      "image": "/uploads/img-20230619-wa0019-7524fcec38f3.jpg"
     }
   ],
   "homeServices": [
@@ -101,7 +94,7 @@
     },
     {
       "title": {
-        "ru": "Техническое обслуживание",
+        "ru": "Гарантийное обслуживание",
         "en": "Maintenance"
       },
       "image": "/images/dvkran/2023__09__service-2.png"
@@ -118,7 +111,7 @@
         "ru": "Монтаж",
         "en": "Installation"
       },
-      "image": "/images/dvkran/2023__09__service-4.png"
+      "image": "/uploads/image-03720be54dad.jpg"
     },
     {
       "title": {
@@ -126,13 +119,6 @@
         "en": "Delivery"
       },
       "image": "/images/dvkran/2023__09__service-5.png"
-    },
-    {
-      "title": {
-        "ru": "Лизинг",
-        "en": "Leasing"
-      },
-      "image": "/images/dvkran/2023__09__service-6.png"
     }
   ],
   "homeProjects": [

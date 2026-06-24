@@ -3,26 +3,34 @@ import { getContent, saveContent, type ContentData } from '@/lib/content-store';
 
 export const dynamic = 'force-dynamic';
 
-// Simple admin token check. In production, use NextAuth or similar.
-// Default dev token: "admin". Pass via x-admin-token header.
-const ADMIN_TOKEN = process.env.ADMIN_TOKEN || 'admin';
+function checkAuth(request: Request): boolean {
+  const auth = request.headers.get('x-admin-auth');
+  if (!auth) return false;
+  try {
+    const decoded = Buffer.from(auth, 'base64').toString('utf-8');
+    const [login, password] = decoded.split(':');
+    const expectedLogin = process.env.ADMIN_LOGIN || 'admin';
+    const expectedPassword = process.env.ADMIN_PASSWORD || 'admin';
+    return login === expectedLogin && password === expectedPassword;
+  } catch {
+    return false;
+  }
+}
 
 export async function POST(request: Request) {
-  try {
-    const token = request.headers.get('x-admin-token');
-    if (token !== ADMIN_TOKEN) {
-      return NextResponse.json(
-        { ok: false, error: 'Unauthorized: invalid admin token' },
-        { status: 401 }
-      );
-    }
+  if (!checkAuth(request)) {
+    return NextResponse.json(
+      { ok: false, error: 'Unauthorized: invalid credentials' },
+      { status: 401 }
+    );
+  }
 
+  try {
     const body = await request.json();
     if (!body || typeof body !== 'object') {
       return NextResponse.json({ ok: false, error: 'Invalid JSON body' }, { status: 400 });
     }
 
-    // Merge with current content to avoid losing fields if partial update
     const current = await getContent();
     const next: ContentData = { ...current, ...body } as ContentData;
     await saveContent(next);
