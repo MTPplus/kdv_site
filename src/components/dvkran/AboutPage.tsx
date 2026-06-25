@@ -31,7 +31,7 @@ export function AboutPage({ lang, content }: AboutPageProps) {
 
   return (
     <div className="dv-container" style={{ paddingTop: 30, paddingBottom: 80 }}>
-      <div className="dv-page__title">{about.title[lang]}</div>
+      <h1 className="dv-page__title">{about.title[lang]}</h1>
 
       <section className="dv-single-section">
         <div className="dv-single">
@@ -50,7 +50,7 @@ export function AboutPage({ lang, content }: AboutPageProps) {
           </div>
 
           {/* Industries + geography */}
-          <div className="dv-industry__title">{about.industryTitle[lang]}</div>
+          <h2 className="dv-industry__title">{about.industryTitle[lang]}</h2>
           <div
             style={{
               display: 'grid',
@@ -79,9 +79,9 @@ export function AboutPage({ lang, content }: AboutPageProps) {
           </div>
 
           {/* Mt today tiles */}
-          <div className="dv-mt-today__title">
+          <h2 className="dv-mt-today__title">
             <span className="highlight">{about.mtTodayTitle[lang]}</span>
-          </div>
+          </h2>
           <div className="dv-tiles">
             {about.mtTodayTiles.map((tile, idx) => (
               <div className="dv-tile" key={idx}>
@@ -92,7 +92,7 @@ export function AboutPage({ lang, content }: AboutPageProps) {
           </div>
 
           {/* Certificates gallery */}
-          <div className="dv-industry__title">{about.certsTitle[lang]}</div>
+          <h2 className="dv-industry__title">{about.certsTitle[lang]}</h2>
           <div className="dv-sert__gallery">
             {certificates.map((src, idx) => (
               <a

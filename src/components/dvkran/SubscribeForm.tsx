@@ -56,7 +56,7 @@ export function SubscribeForm({ lang, compact = false }: SubscribeFormProps) {
       <section className="dv-subscribe-section" style={compact ? { marginBottom: 40 } : undefined}>
         <div className="dv-container">
           <div className="dv-subscribe">
-            <div className="dv-subscribe__title">{t.haveQuestions}</div>
+            <h2 className="dv-subscribe__title">{t.haveQuestions}</h2>
             <form className="dv-subscribe__form" onSubmit={handleSubmit}>
               <input
                 className="dv-subscribe__name"

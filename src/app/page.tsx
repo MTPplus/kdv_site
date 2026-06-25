@@ -18,42 +18,30 @@ const VALID_VIEWS: View[] = ['home', 'about', 'contacts', 'admin'];
 
 export default function Home() {
   // ── SSR-safe state ──────────────────────────────────────────────
-  // All state starts with defaults that are identical on server and client.
-  // Client-only values (URL hash, localStorage) are read in useEffect AFTER
-  // hydration completes, then state is updated to trigger a re-render.
-  // This guarantees zero hydration mismatch.
   const [view, setView] = useState<View>('home');
   const [lang, setLang] = useState<Lang>('ru');
   const [mounted, setMounted] = useState(false);
 
-  // Dynamic content loaded from admin API (with static fallback)
   const [content, setContent] = useState<DynamicContent>({ loaded: false });
   const [showTop, setShowTop] = useState(false);
 
-  // page derived from view (admin doesn't change current page in header)
   const page: PageId = view === 'admin' ? 'home' : view;
 
-  // ── Mount: read URL hash + saved language ──────────────────────
-  // This runs AFTER hydration, so the initial client render always matches
-  // the server HTML (both use the default 'home'/'ru' values).
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect -- mounted flag is the standard SSR-safe pattern
     setMounted(true);
 
-    // Restore view from URL hash
     const hash = window.location.hash.replace(/^#/, '');
     if ((VALID_VIEWS as string[]).includes(hash)) {
       setView(hash as View);
     }
 
-    // Restore language from localStorage
     const stored = window.localStorage.getItem(LANG_STORAGE_KEY);
     if (stored === 'en' || stored === 'ru') {
       setLang(stored);
     }
   }, []);
 
-  // ── Listen for hash changes (browser back/forward) ─────────────
   useEffect(() => {
     const onHash = () => {
       const h = window.location.hash.replace(/^#/, '');
@@ -67,7 +55,6 @@ export default function Home() {
     return () => window.removeEventListener('hashchange', onHash);
   }, []);
 
-  // ── Load dynamic content on mount + every 60s ──────────────────
   useEffect(() => {
     let active = true;
     let timer: ReturnType<typeof setTimeout>;
@@ -83,12 +70,10 @@ export default function Home() {
     };
   }, []);
 
-  // ── Scroll to top on view change ───────────────────────────────
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'auto' });
   }, [view]);
 
-  // ── Back-to-top visibility ─────────────────────────────────────
   useEffect(() => {
     const onScroll = () => {
       setShowTop(window.scrollY > 600);
@@ -97,18 +82,15 @@ export default function Home() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // ── Persist language choice + update <html lang> ───────────────
   useEffect(() => {
     window.localStorage.setItem(LANG_STORAGE_KEY, lang);
     document.documentElement.lang = lang;
   }, [lang]);
 
-  // ── Update document title to match language ────────────────────
   useEffect(() => {
     document.title = UI[lang].brandTitle;
   }, [lang]);
 
-  // ── Navigation handlers ────────────────────────────────────────
   const handleNavigate = useCallback((next: PageId) => {
     setView(next);
     const newHash = next === 'home' ? '' : `#${next}`;
@@ -131,11 +113,13 @@ export default function Home() {
   };
 
   // ── Admin view: full-screen, no header/footer ──────────────────
-  // Only render admin after mount (it uses localStorage/browser APIs).
   if (view === 'admin' && mounted) {
     return <AdminPage onExit={handleExitAdmin} />;
   }
 
+  // ── Main layout: ALL sections rendered in DOM for SEO/AI ──────
+  // Non-active sections are hidden via CSS but present in HTML so
+  // search engines and AI crawlers can read all content.
   return (
     <div className="min-h-screen flex flex-col" style={{ background: '#fff' }}>
       <Header
@@ -146,11 +130,20 @@ export default function Home() {
       />
 
       <main className="dv-main" style={{ flex: 1, display: 'block' }}>
-        {view === 'home' && (
+        {/* Home — always rendered, visible when active */}
+        <div style={{ display: view === 'home' ? 'block' : 'none' }} aria-hidden={view !== 'home'}>
           <HomePage lang={lang} onNavigate={handleNavigate} content={content} />
-        )}
-        {view === 'about' && <AboutPage lang={lang} content={content} />}
-        {view === 'contacts' && <ContactsPage lang={lang} content={content} />}
+        </div>
+
+        {/* About — rendered in DOM for SEO, hidden when not active */}
+        <div style={{ display: view === 'about' ? 'block' : 'none' }} aria-hidden={view !== 'about'}>
+          <AboutPage lang={lang} content={content} />
+        </div>
+
+        {/* Contacts — rendered in DOM for SEO, hidden when not active */}
+        <div style={{ display: view === 'contacts' ? 'block' : 'none' }} aria-hidden={view !== 'contacts'}>
+          <ContactsPage lang={lang} content={content} />
+        </div>
       </main>
 
       <Footer lang={lang} onNavigate={handleNavigate} content={content} />

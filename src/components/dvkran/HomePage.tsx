@@ -42,7 +42,7 @@ export function HomePage({ lang, onNavigate, content }: HomePageProps) {
       <section className="dv-face-section">
         <div className="dv-container dv-face-banner">
           <div className="dv-face-block">
-            <div className="dv-face-block__title">{heroTitle}</div>
+            <h1 className="dv-face-block__title">{heroTitle}</h1>
             <div className="dv-face-block__description">{heroDescription}</div>
             <a
               className="dv-button"
@@ -62,7 +62,7 @@ export function HomePage({ lang, onNavigate, content }: HomePageProps) {
       <section className="dv-key-products-section">
         <div className="dv-container">
           <div className="dv-key-products">
-            <div className="dv-key-products__title">{t.productsTitle}</div>
+            <h2 className="dv-key-products__title">{t.productsTitle}</h2>
             <div className="dv-key-products__view">
               <div className="dv-key-products__viewer">
                 {products[activeProduct]?.image ? (
@@ -100,16 +100,16 @@ export function HomePage({ lang, onNavigate, content }: HomePageProps) {
       <section className="dv-services-section">
         <div className="dv-container">
           <div className="dv-services">
-            <div className="dv-section-title dv-services__title">
+            <h2 className="dv-section-title dv-services__title">
               {t.engineeringServicesTitle}
-            </div>
+            </h2>
             <div className="dv-services__list">
               {services.map((s, idx) => (
                 <div key={idx} className="dv-services__item">
                   <div className="single-element__image">
                     <SafeImg src={s.image} alt={s.title[lang]} />
                   </div>
-                  <div className="dv-single-element__title">{s.title[lang]}</div>
+                  <h3 className="dv-single-element__title">{s.title[lang]}</h3>
                 </div>
               ))}
             </div>
@@ -120,13 +120,13 @@ export function HomePage({ lang, onNavigate, content }: HomePageProps) {
       {/* Our projects preview */}
       <section className="dv-projects-section">
         <div className="dv-container">
-          <div className="dv-project__header-tittle">{t.ourProjectsTitle}</div>
+          <h2 className="dv-project__header-tittle">{t.ourProjectsTitle}</h2>
           <div className="dv-project__list">
             {projects.map((p, idx) => (
               <div key={idx} className="dv-project__item">
                 <SafeImg className="dv-project__img" src={p.image} alt={p.title[lang]} />
                 <div className="dv-project__text-area">
-                  <div className="dv-project__tittle">{p.title[lang]}</div>
+                  <h3 className="dv-project__tittle">{p.title[lang]}</h3>
                   <div className="dv-project__text">{p.text[lang]}</div>
                 </div>
               </div>
@@ -151,7 +151,7 @@ export function HomePage({ lang, onNavigate, content }: HomePageProps) {
         {/* Provider block — text only, no crane background */}
         <section className="dv-provider-section">
           <div className="dv-container">
-            <div className="dv-provider__tittle">{provider.title[lang]}</div>
+            <h2 className="dv-provider__tittle">{provider.title[lang]}</h2>
             <div className="dv-provider__text">
               {provider.paragraphs[lang].map((p, idx) => (
                 <p key={idx}>{p}</p>
@@ -161,18 +161,18 @@ export function HomePage({ lang, onNavigate, content }: HomePageProps) {
         </section>
 
         {/* Crane + Russia map — standalone image, limited to container width */}
-        <section className="dv-crane-banner-section">
-          <div className="dv-crane-banner" />
+        <section className="dv-crane-banner-section" aria-label="Производственные мощности КРАН-ДВ — кран и карта Дальнего Востока">
+          <div className="dv-crane-banner" role="img" aria-label="Желтый мостовой кран и красная карта Дальневосточного федерального округа — география работы компании КРАН-ДВ" />
         </section>
 
         {/* Clients */}
         <section className="dv-clients-section">
           <div className="dv-container">
-            <div className="dv-clients__tittle">{t.ourClients}</div>
+            <h2 className="dv-clients__tittle">{t.ourClients}</h2>
             <div className="dv-clients__wrapper">
               {clients.map((c, idx) => (
                 <div className="dv-client" key={idx}>
-                  <SafeImg src={c} alt={`Client ${idx + 1}`} />
+                  <SafeImg src={c} alt={`Логотип клиента ${idx + 1} — КРАН-ДВ Хабаровск`} />
                 </div>
               ))}
             </div>

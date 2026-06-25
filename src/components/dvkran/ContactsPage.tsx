@@ -21,17 +21,17 @@ export function ContactsPage({ lang, content }: ContactsPageProps) {
 
   return (
     <div className="dv-container" style={{ paddingTop: 30, paddingBottom: 80 }}>
-      <div className="dv-page__title">{title}</div>
+      <h1 className="dv-page__title">{title}</h1>
 
       <section className="dv-contacts-section">
         <div className="dv-contacts">
           <div className="dv-contacts__list">
             <div className="dv-contact">
               <div className="dv-contact__info">
-                <div className="dv-contact__name">{officeName}</div>
+                <h2 className="dv-contact__name">{officeName}</h2>
                 <div className="dv-contact__row">{settings.addressOffice[lang]}</div>
 
-                <div className="dv-contact__name" style={{ marginTop: 30 }}>{productionName}</div>
+                <h2 className="dv-contact__name" style={{ marginTop: 30 }}>{productionName}</h2>
                 <div className="dv-contact__row">{productionAddress}</div>
 
                 <div className="dv-contact__row" style={{ marginTop: 30 }}>

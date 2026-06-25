@@ -46,7 +46,7 @@ export function SafeImg({
       alt={alt}
       className={className}
       style={style}
-      loading={loading}
+      loading={loading ?? 'lazy'}
       width={width}
       height={height}
     />

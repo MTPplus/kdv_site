@@ -150,6 +150,22 @@ export function AdminPage({ onExit }: AdminPageProps) {
     window.open('/', '_blank');
   };
 
+  // Inject noindex meta tag when admin is active (prevents search engine indexing)
+  useEffect(() => {
+    const existing = document.querySelector('meta[name="robots"][data-admin]');
+    if (!existing) {
+      const meta = document.createElement('meta');
+      meta.name = 'robots';
+      meta.content = 'noindex, nofollow';
+      meta.setAttribute('data-admin', 'true');
+      document.head.appendChild(meta);
+    }
+    return () => {
+      const m = document.querySelector('meta[name="robots"][data-admin]');
+      if (m) m.remove();
+    };
+  }, []);
+
   // ---------- Login screen ----------
   if (!authed) {
     return (
