@@ -6,7 +6,7 @@
 import { promises as fs } from 'fs';
 import path from 'path';
 
-const CONTENT_FILE = path.join('/home/z/my-project', 'data', 'content.json');
+const CONTENT_FILE = path.join(process.cwd(), 'data', 'content.json');
 
 export interface Bilingual {
   ru: string;
